@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.ronnywinkler.homey.qnap",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "name": {
@@ -9,7 +9,7 @@
     "de": "QNAP"
   },
   "description": {
-    "en": "Get statistical data from your QNAP NAS ",
+    "en": "Get statistical data from your QNAP NAS",
     "de": "Erhalte Statistik-Daten deines QNAP-NAS"
   },
   "category": [
@@ -641,7 +641,7 @@
         "measure_hdd_type"
       ],
       "defaultCapabilities": [
-        "measure_hdd_health"
+        "measure_hdd_temp"
       ],
       "settings": [],
       "pair": [
@@ -704,7 +704,7 @@
         "measure_firmware_build_time"
       ],
       "defaultCapabilities": [
-        "measure_cpu_temp"
+        "measure_cpu_usage"
       ],
       "settings": [
         {

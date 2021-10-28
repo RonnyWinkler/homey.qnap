@@ -26,6 +26,30 @@ class nas extends Device {
           }
       }
     
+    async setDeviceAvailable(){
+        this.setAvailable();
+        let hddList = this.homey.drivers.getDriver('hdd').getDevices();
+        for (let i=0; i<hddList.length; i++){
+            hddList[i].setAvailable();
+        }
+        let ethList = this.homey.drivers.getDriver('eth').getDevices();
+        for (let i=0; i<ethList.length; i++){
+            ethList[i].setAvailable();
+        }
+    }
+
+    async setDeviceUnavailable(){
+        this.setUnavailable();
+        let hddList = this.homey.drivers.getDriver('hdd').getDevices();
+        for (let i=0; i<hddList.length; i++){
+            hddList[i].setUnavailable();
+        }
+        let ethList = this.homey.drivers.getDriver('eth').getDevices();
+        for (let i=0; i<ethList.length; i++){
+            ethList[i].setUnavailable();
+        }
+    }   
+
       async updateDevice(){
         this.log("updateDevice() NAS-ID: "+this.getData().id+' Name: '+this.getName());
         let scanInterval = await this.getSetting('scan_interval');
@@ -47,28 +71,34 @@ class nas extends Device {
                         this.getStoreValue('user'), 
                         this.getStoreValue('pw'));
                 if (!loggedIn){
-                    this.error('Login-Error, retry at next scan interval.');
+                    this.error('Login-Error, set devices unavailable. Retry at next scan interval.');
                     // Not logged in: Set device unavailable
-                    this.setUnavailable();
+                    this.setDeviceUnavailable();
                     //throw 'Login-Error, retry at next scan interval.';
                     return false;
                 }
             }
             catch(error){
-                this.error('Login-Error: '+error);
+                this.error('Login-Error: '+error+' Set devices unavailable.');
                 // Not logged in: Set device unavailable
-                this.setUnavailable();
+                this.setDeviceUnavailable();
                 //throw 'Login-Error: '+error;
                 return false;
             }
         }
-        // Logged in: Set device available
-        this.setAvailable();
         // Proceed with getting device data.
-        //this.log('setCapability: measure_last_update='+await this.convertDateToString(new Date()));
-        this.setCapabilityValue('measure_last_update', await this.convertDateToString(new Date()));
         let sysInfo = await qnap.getSystemInfo();
+        this.log(sysInfo);
+        //check for auth or user rights...
+        if (sysInfo.QDocRoot.authPassed == '0'){
+            this.error('Login/Auth/Right-Error. Set devices unavailable.');
+            this.setDeviceUnavailable();
+            return false;
+        }
+        // Logged in: Set device available
+        this.setDeviceAvailable();
         // Set device data...
+        this.setCapabilityValue('measure_last_update', await this.convertDateToString(new Date()));
         this.setCapabilityValue('measure_model_name', sysInfo.QDocRoot.model.displayModelName);
         this.setCapabilityValue('measure_firmware', sysInfo.QDocRoot.firmware.version + '.' + sysInfo.QDocRoot.firmware.number);
         this.setCapabilityValue('measure_firmware_build_time', sysInfo.QDocRoot.firmware.buildTime);

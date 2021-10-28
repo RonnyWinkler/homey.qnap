@@ -21,7 +21,7 @@
     "measure_hdd_type"
   ],
   "defaultCapabilities": [
-    "measure_hdd_health"
+    "measure_hdd_temp"
   ],
   "settings": [
   ],

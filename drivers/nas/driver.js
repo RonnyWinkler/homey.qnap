@@ -132,8 +132,12 @@ class nasDriver extends Driver {
       device.setStoreValue('port', this.nasPort);
       device.setStoreValue('user', this.username);
       device.setStoreValue('pw', this.password);
-      device.updateDevice();
-      return true;
+      if (await device.updateDevice()){
+        return true;
+      }
+      else{
+        return false;
+      }
     }
     else{
       return false;
