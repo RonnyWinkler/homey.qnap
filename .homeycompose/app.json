@@ -1,0 +1,37 @@
+{
+  "id": "de.ronnywinkler.homey.qnap",
+  "version": "0.0.1",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "QNAP",
+    "de": "QNAP"
+  },
+  "description": {
+    "en": "Get statistical data from your QNAP NAS",
+    "de": "Erhalte Statistik-Daten deines QNAP-NAS"
+  },
+  "category": [
+    "tools"
+  ],
+  "author": {
+    "name": "Ronny Winkler",
+    "email": "ronny.winkler@web.de"
+  },
+  "brandColor":"#27387D",
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png"
+  },
+  "source": "https://github.com/RonnyWinkler/homey.qnap",
+  "homeyCommunityTopicId": 53898,
+  "permissions": [],
+  "contributing": {
+      "donate": {
+          "paypal": {
+              "username": "winklerronny"
+          }
+      }
+  }
+
+}

@@ -1,0 +1,15 @@
+{
+    "id": "alarm_hdd_health_false",
+    "highlight": true,
+    "title": {
+        "en": "Health alarm has been deactivated",
+        "de": "Health-Alarm wurde deaktiviert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=warndistrict|hdd"
+        }
+      ]
+}

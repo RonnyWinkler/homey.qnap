@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Drive",
+        "de": "Laufwerk"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_hdd_hdno.svg"
+}

@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "RX/received",
+        "de": "RX/empfangen"
+    },
+    "units": { 
+        "en": "pkg",
+        "de": "Pkt" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_rx_packet.svg"
+}

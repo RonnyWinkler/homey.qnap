@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "IP allocation",
+        "de": "IP-Vergabe"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_ip_alloc.svg"
+}

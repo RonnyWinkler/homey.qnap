@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "max. transfer rate",
+        "de": "max. Übertragungsrate"
+    },
+    "units": { 
+        "en": "MBit/s",
+        "de": "MBit/s" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_max_speed.svg"
+}

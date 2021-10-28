@@ -1,0 +1,12 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "Temp. alert",
+        "de": "Temp. Alarm"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/alarm_hdd_temp.svg"
+}

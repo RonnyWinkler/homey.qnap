@@ -1,0 +1,13 @@
+{
+    "settings": {
+    },
+    "pair": {
+        "title_nas_data": "LAN connection to NAS",
+        "subtitle_nas_data": "Set the IP address and port to connect to your NAS. Use the SSL-Port of your QTS access",
+        "label_nas_ip": "IP address or hostname",
+        "label_nas_port": "Port (SSL)",
+        "label_state": "Connection state",
+        "state_connected": "IP and port valid",
+        "state_error": "IP and port not valid"
+    }
+}

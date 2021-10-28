@@ -1,0 +1,25 @@
+{
+    "id": "measure_eth_rx_packet_changed",
+    "title": {
+        "en": "Received packages have changed",
+        "de": "Empfangene Pakete haben sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_eth_rx_packet",
+            "type": "string",
+            "title": {
+                "en": "Received pck",
+                "de": "Empfangene Pkt"
+            },
+            "example": "123456"
+        }
+    ]
+}

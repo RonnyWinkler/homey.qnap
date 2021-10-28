@@ -1,0 +1,25 @@
+{
+    "id": "measure_firmware_build_time_changed",
+    "title": {
+        "en": "The firmware date has changed",
+        "de": "Das Firmware-Datum hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_firmware_build_time",
+            "type": "string",
+            "title": {
+                "en": "firmware date",
+                "de": "Firmware-Datum"
+            },
+            "example": "2021/10/01"
+        }
+    ]
+}

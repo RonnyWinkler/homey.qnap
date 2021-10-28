@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Health",
+        "de": "Health"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_hdd_health.svg"
+}

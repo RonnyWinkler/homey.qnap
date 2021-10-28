@@ -1,7 +1,3 @@
-# QNAP
-
-Get statistical data from your QNAP NAS
-
 Connect Homey to your QNAP NAS.
 You get an overview of important system properties such as CPU and memory usage, temperature, fan, firmware version.
 

@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "DNS 1",
+        "de": "DNS 1"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_dns.svg"
+}

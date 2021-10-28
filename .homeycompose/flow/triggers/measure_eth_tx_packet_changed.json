@@ -1,0 +1,25 @@
+{
+    "id": "measure_eth_tx_packet_changed",
+    "title": {
+        "en": "Transmitted packages have changed",
+        "de": "Gesendete Pakete haben sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_eth_tx_packet",
+            "type": "string",
+            "title": {
+                "en": "Transmitted pck",
+                "de": "Gesendete Pkt"
+            },
+            "example": "123456"
+        }
+    ]
+}

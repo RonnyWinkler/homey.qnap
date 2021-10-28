@@ -1,0 +1,12 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "Health alert",
+        "de": "Health-Alarm"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/alarm_hdd_health.svg"
+}

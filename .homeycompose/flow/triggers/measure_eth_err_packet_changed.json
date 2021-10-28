@@ -1,0 +1,25 @@
+{
+    "id": "measure_eth_err_packet_changed",
+    "title": {
+        "en": "Error packages have changed",
+        "de": "Fehler-Pakete hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_eth_err_packet",
+            "type": "string",
+            "title": {
+                "en": "Errors",
+                "de": "Fehler"
+            },
+            "example": "10"
+        }
+    ]
+}

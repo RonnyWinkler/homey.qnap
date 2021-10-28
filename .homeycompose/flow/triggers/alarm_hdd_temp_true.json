@@ -1,0 +1,15 @@
+{
+    "id": "alarm_hdd_temp_true",
+    "highlight": true,
+    "title": {
+        "en": "Temperature alarm has been activated",
+        "de": "Temperatur-Alarm wurde aktiviert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=warndistrict|hdd"
+        }
+      ]
+}

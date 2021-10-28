@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "IP mask",
+        "de": "IP-Maske"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_ip.svg"
+}

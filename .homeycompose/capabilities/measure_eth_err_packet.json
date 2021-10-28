@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Errors",
+        "de": "Fehler"
+    },
+    "units": { 
+        "en": "pkg",
+        "de": "Pkt" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_err_packet.svg"
+}

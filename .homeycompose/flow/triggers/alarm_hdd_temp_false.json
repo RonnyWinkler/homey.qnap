@@ -1,0 +1,15 @@
+{
+    "id": "alarm_hdd_temp_false",
+    "highlight": true,
+    "title": {
+        "en": "Temperature alarm has been deactivated",
+        "de": "Temperatur-Alarm wurde deaktiviert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=warndistrict|hdd"
+        }
+      ]
+}

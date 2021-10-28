@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "ID",
+        "de": "ID"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_id.svg"
+}

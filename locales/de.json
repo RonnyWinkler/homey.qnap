@@ -1,0 +1,13 @@
+{
+    "settings": {
+    },
+    "pair": {
+        "title_nas_data": "LAN-Verbindung zum NAS",
+        "subtitle_nas_data": "Gib die IP-Addresse und den Port an, um Homey mit deinem NAS zu verbinden. Benutze den SSL-Port deines QTS-Zugangs",
+        "label_nas_ip": "IP-Addresse oder Hostname",
+        "label_nas_port": "Port (SSL)",
+        "label_state": "Verbindungs-Status",
+        "state_connected": "IP und Port sind gültig",
+        "state_error": "IP und Port sind ungültig"
+    }
+}

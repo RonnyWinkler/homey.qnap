@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "TX/transmitted",
+        "de": "TX/gesendet"
+    },
+    "units": { 
+        "en": "pkg",
+        "de": "Pkt" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_tx_packet.svg"
+}

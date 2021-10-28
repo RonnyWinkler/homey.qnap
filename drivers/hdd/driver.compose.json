@@ -1,0 +1,55 @@
+{
+  "id": "hdd",
+  "name": {
+    "en": "Hard disk ",
+    "de": "Festplatte"
+  },
+  "class": "other",
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "capabilities": [
+    "measure_hdd_hdno",
+    "measure_hdd_capacity",
+
+    "measure_hdd_health",
+    "alarm_hdd_health",
+    "measure_hdd_temp",
+    "alarm_hdd_temp",
+
+    "measure_hdd_model",
+    "measure_hdd_serial",
+    "measure_hdd_type"
+  ],
+  "defaultCapabilities": [
+    "measure_hdd_health"
+  ],
+  "settings": [
+  ],
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+          "next": "list_devices2"
+      },
+      "options": { "singular": true }
+    },
+    {
+      "id": "list_devices2",
+      "template": "list_devices",
+      "navigation": {
+          "prev": "list_devices",
+          "next": "add_devices"
+      },
+      "options": { "singular": true }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "/drivers/hdd/assets/images/small.png",
+    "large": "/drivers/hdd/assets/images/large.png"
+  }
+}

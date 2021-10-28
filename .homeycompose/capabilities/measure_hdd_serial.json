@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Serial Nr.",
+        "de": "Seriennummer"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_hdd.svg"
+}

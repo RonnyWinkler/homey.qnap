@@ -1,0 +1,60 @@
+{
+  "id": "eth",
+  "name": {
+    "en": "Ethernet interface",
+    "de": "Ethernet-Schnittstelle"
+  },
+  "class": "other",
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "capabilities": [
+    "measure_eth_id",
+    "measure_eth_name",
+
+    "measure_eth_mac",
+    "measure_eth_ip_alloc",
+    "measure_eth_ip",
+    "measure_eth_mask",
+
+    "measure_eth_rx_packet",
+    "measure_eth_tx_packet",
+    "measure_eth_err_packet",
+    "measure_eth_max_speed",
+
+    "measure_eth_dns1",
+    "measure_eth_dns2",
+    "measure_eth_status"
+  ],
+  "defaultCapabilities": [
+    "measure_eth_ip"
+  ],
+  "settings": [
+  ],
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+          "next": "list_devices2"
+      },
+      "options": { "singular": true }
+    },
+    {
+      "id": "list_devices2",
+      "template": "list_devices",
+      "navigation": {
+          "prev": "list_devices",
+          "next": "add_devices"
+      },
+      "options": { "singular": true }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "/drivers/eth/assets/images/small.png",
+    "large": "/drivers/eth/assets/images/large.png"
+  }
+}

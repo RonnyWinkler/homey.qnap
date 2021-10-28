@@ -1,0 +1,134 @@
+{
+  "id": "nas",
+  "name": {
+    "en": "QNAP NAS",
+    "de": "QNAP-NAS"
+  },
+  "class": "other",
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "capabilities": [
+    "measure_last_update",
+    "measure_model_name",
+
+    "measure_cpu_usage",
+    "measure_mem_usage",
+
+    "measure_mem_used",
+    "measure_mem_free",
+    "measure_mem_total",
+    "measure_fan_speed",
+
+    "measure_cpu_temp",
+    "measure_sys_temp",
+
+    "measure_firmware",
+    "measure_firmware_build_time"
+  ],
+  "defaultCapabilities": [
+    "measure_cpu_temp"
+  ],
+  "settings": [
+    {
+      "id": "scan_interval",
+      "type": "number",
+      "value": 5,
+      "label": {
+        "en": "Scan interval",
+        "de": "Abfrageintervall"
+      },
+      "hint": {
+        "en": "Scan interval for NAS device data in minutes.",
+        "de": "Abfrageintervall für NAS-Gerätedaten in Minuten."
+      },
+      "units": "min"
+    }
+  ],
+  "pair": [
+    {
+      "id": "nas_data",
+      "navigation": {
+        "next": "login"
+      }
+    },
+    {
+      "id": "login",
+      "template": "login_credentials",
+      "options": {
+        "usernameLabel": { 
+          "en": "User",
+          "de": "Benutzer" 
+        },
+        "usernamePlaceholder": { 
+          "en": "user",
+          "de": "Benutzer"
+        },
+        "passwordLabel": { 
+          "en": "Password",
+          "de": "Passwort" 
+        },
+        "passwordPlaceholder": { 
+          "en": "Password",
+          "de": "Passwort" 
+        }
+      },
+      "navigation": {
+          "prev": "nas_data"
+      }
+    },
+    {
+      "id": "loading",
+      "template": "loading"
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+          "next": "add_devices",
+          "prev": "login"
+      },
+      "options": { "singular": true }
+    },
+    {
+        "id": "add_devices",
+        "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "nas_data",
+      "navigation": {
+        "next": "login"
+      }
+    },
+    {
+      "id": "login",
+      "template": "login_credentials",
+      "options": {
+        "usernameLabel": { 
+          "en": "User",
+          "de": "Benutzer" 
+        },
+        "usernamePlaceholder": { 
+          "en": "user",
+          "de": "Benutzer"
+        },
+        "passwordLabel": { 
+          "en": "Password",
+          "de": "Passwort" 
+        },
+        "passwordPlaceholder": { 
+          "en": "Password",
+          "de": "Passwort" 
+        }
+      },
+      "navigation": {
+          "prev": "nas_data"
+      }
+    }
+  ],
+  "images": {
+    "small": "/drivers/nas/assets/images/small.png",
+    "large": "/drivers/nas/assets/images/large.png"
+  }
+}

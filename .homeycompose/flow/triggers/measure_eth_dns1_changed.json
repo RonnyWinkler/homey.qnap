@@ -1,0 +1,25 @@
+{
+    "id": "measure_eth_dns1_changed",
+    "title": {
+        "en": "The DNS 1 has changed",
+        "de": "Der DNS 1 hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_eth_dns1",
+            "type": "string",
+            "title": {
+                "en": "DNS 1",
+                "de": "DNS 1"
+            },
+            "example": "192.168.1.1"
+        }
+    ]
+}

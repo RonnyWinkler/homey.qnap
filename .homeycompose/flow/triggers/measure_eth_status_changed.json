@@ -1,0 +1,26 @@
+{
+    "id": "measure_eth_status_changed",
+    "highlight": true,
+    "title": {
+        "en": "The status has changed",
+        "de": "Der Status hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_eth_status",
+            "type": "string",
+            "title": {
+                "en": "Status",
+                "de": "Status"
+            },
+            "example": "Online/Offline"
+        }
+    ]
+}
