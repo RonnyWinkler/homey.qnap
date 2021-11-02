@@ -51,7 +51,7 @@
     }
   ],
   "images": {
-    "small": "/drivers/hdd/assets/images/small.png",
-    "large": "/drivers/hdd/assets/images/large.png"
+    "small": "/drivers/vol/assets/images/small.png",
+    "large": "/drivers/vol/assets/images/large.png"
   }
 }
