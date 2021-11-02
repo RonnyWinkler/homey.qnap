@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "System",
+        "de": "System"
+    },
+    "units": { 
+        "en": "GB",
+        "de": "GB" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_vol_size_others.svg"
+}

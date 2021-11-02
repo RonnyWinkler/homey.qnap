@@ -1,0 +1,25 @@
+{
+    "id": "measure_nas_fan_speed_changed",
+    "title": {
+        "en": "The fan speed has changed",
+        "de": "Die Lüfter-Geschwindigkeit hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_nas_fan_speed",
+            "type": "number",
+            "title": {
+                "en": "fan speed",
+                "de": "Lüfter-Geschwindigkeit"
+            },
+            "example": "645"
+        }
+    ]
+}

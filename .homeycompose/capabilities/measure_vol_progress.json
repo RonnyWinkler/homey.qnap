@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Progress",
+        "de": "Verarbeitung"
+    },
+    "units": { 
+        "en": "%",
+        "de": "%" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_vol_progress.svg"
+}

@@ -1,0 +1,25 @@
+{
+    "id": "measure_nas_firmware_changed",
+    "title": {
+        "en": "The firmware version has changed",
+        "de": "Die Firmware-Version hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_nas_firmware",
+            "type": "string",
+            "title": {
+                "en": "firmware version",
+                "de": "Firmware-Version"
+            },
+            "example": "4.5.4.1787"
+        }
+    ]
+}

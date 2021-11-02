@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Firmware",
+        "de": "Firmware"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_nas_firmware.svg"
+}

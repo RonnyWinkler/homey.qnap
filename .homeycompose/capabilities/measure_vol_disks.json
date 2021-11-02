@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Disks",
+        "de": "Laufwerke"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_vol_disks.svg"
+}

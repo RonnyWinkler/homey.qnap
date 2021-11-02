@@ -12,7 +12,8 @@ class eth extends Device {
       }
   
       async updateCapabilities(){
-          // Add new capabilities (if not already added)
+        // Add new capabilities (if not already added)
+
       }
     
       async updateDevice(ethData){
@@ -51,6 +52,15 @@ class eth extends Device {
         return true;
       }
     
+      async updateDeviceBw(bwData){
+        this.log("updateDeviceBw() NAS-ID"+ this.getData().nasId +" Eth-ID: "+this.getData().ethId+' Name: '+this.getName());
+        this.log(bwData);
+        // calculate MB/s, correction with /5 to get identival data like in QTS
+        this.setCapabilityValue('measure_eth_tx', Math.round((parseInt(bwData.tx) / 1000 / 8) *100) / 100 );
+        this.setCapabilityValue('measure_eth_rx', Math.round((parseInt(bwData.rx) / 1000 / 8) *100) / 100 );
+        return true;
+      }
+
     /**
      * onAdded is called when the user adds the device, called just after pairing.
      */

@@ -1,0 +1,26 @@
+{
+    "id": "measure_eth_rx_changed",
+    "highlight": true,
+    "title": {
+        "en": "RX/receiving data rate has changed",
+        "de": "RX/empfangend-Datenrate hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_eth_rx",
+            "type": "string",
+            "title": {
+                "en": "RX/receiving kB/s",
+                "de": "RX/empfangend kB/s"
+            },
+            "example": "165.4"
+        }
+    ]
+}

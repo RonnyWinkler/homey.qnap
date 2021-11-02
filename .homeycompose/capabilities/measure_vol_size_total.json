@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Total",
+        "de": "Gesamt"
+    },
+    "units": { 
+        "en": "GB",
+        "de": "GB" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_vol_size_total.svg"
+}

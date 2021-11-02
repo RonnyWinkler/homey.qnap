@@ -41,7 +41,7 @@
           "prev": "list_devices",
           "next": "add_devices"
       },
-      "options": { "singular": true }
+      "options": { "singular": false }
     },
     {
       "id": "add_devices",

@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Free",
+        "de": "Frei"
+    },
+    "units": { 
+        "en": "GB",
+        "de": "GB" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_vol_size_free.svg"
+}

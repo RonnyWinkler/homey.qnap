@@ -6,5 +6,9 @@
   "0.0.2": {
     "en": "Take login/authorization errors into account",
     "de": "Berücksichtige Anmelde-/Berechtigungsfehler"
+  },
+  "0.0.3": {
+    "en": "Added volumes",
+    "de": "Volumes hinzugefügt"
   }
 }

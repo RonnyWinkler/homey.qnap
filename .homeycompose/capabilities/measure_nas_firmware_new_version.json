@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "available firmware",
+        "de": "verfügbare Firmware"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_nas_firmware_new_version.svg"
+}

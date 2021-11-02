@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "RX/receiving",
+        "de": "RX/empfangend"
+    },
+    "units": { 
+        "en": "kB/s",
+        "de": "kB/s" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_rx.svg"
+}

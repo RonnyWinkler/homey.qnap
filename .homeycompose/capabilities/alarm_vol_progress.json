@@ -1,0 +1,12 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "In progress",
+        "de": "In Verarbeitung"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/alarm_vol_progress.svg"
+}

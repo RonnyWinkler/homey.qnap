@@ -21,9 +21,7 @@ class nas extends Device {
   
       async updateCapabilities(){
           // Add new capabilities (if not already added)
-          if (!this.hasCapability('measure_last_update')){
-              this.addCapability('measure_last_update');
-          }
+
       }
     
     async setDeviceAvailable(){
@@ -36,6 +34,10 @@ class nas extends Device {
         for (let i=0; i<ethList.length; i++){
             ethList[i].setAvailable();
         }
+        let volList = this.homey.drivers.getDriver('vol').getDevices();
+        for (let i=0; i<volList.length; i++){
+            volList[i].setAvailable();
+        }
     }
 
     async setDeviceUnavailable(){
@@ -47,6 +49,10 @@ class nas extends Device {
         let ethList = this.homey.drivers.getDriver('eth').getDevices();
         for (let i=0; i<ethList.length; i++){
             ethList[i].setUnavailable();
+        }
+        let volList = this.homey.drivers.getDriver('vol').getDevices();
+        for (let i=0; i<volList.length; i++){
+            volList[i].setUnavailable();
         }
     }   
 
@@ -93,42 +99,65 @@ class nas extends Device {
         if (sysInfo.QDocRoot.authPassed == '0'){
             this.error('Login/Auth/Right-Error. Set devices unavailable.');
             this.setDeviceUnavailable();
+            qnap.logoff();
             return false;
         }
         // Logged in: Set device available
         this.setDeviceAvailable();
         // Set device data...
-        this.setCapabilityValue('measure_last_update', await this.convertDateToString(new Date()));
-        this.setCapabilityValue('measure_model_name', sysInfo.QDocRoot.model.displayModelName);
-        this.setCapabilityValue('measure_firmware', sysInfo.QDocRoot.firmware.version + '.' + sysInfo.QDocRoot.firmware.number);
-        this.setCapabilityValue('measure_firmware_build_time', sysInfo.QDocRoot.firmware.buildTime);
-        this.setCapabilityValue('measure_cpu_usage', parseFloat(parseFloat(sysInfo.QDocRoot.func.ownContent.root.cpu_usage.split(' ')[0]).toFixed(2)));
+        this.setCapabilityValue('measure_nas_last_update', await this.convertDateToString(new Date()));
+        this.setCapabilityValue('measure_nas_model_name', sysInfo.QDocRoot.model.displayModelName);
+        this.setCapabilityValue('measure_nas_firmware', sysInfo.QDocRoot.firmware.version + '.' + sysInfo.QDocRoot.firmware.number);
+        this.setCapabilityValue('measure_nas_firmware_build_time', sysInfo.QDocRoot.firmware.buildTime);
+        this.setCapabilityValue('measure_nas_cpu_usage', parseFloat(parseFloat(sysInfo.QDocRoot.func.ownContent.root.cpu_usage.split(' ')[0]).toFixed(2)));
         let total_memory = parseFloat(sysInfo.QDocRoot.func.ownContent.root.total_memory);
         let free_memory = parseFloat(sysInfo.QDocRoot.func.ownContent.root.free_memory);
         let used_memory = total_memory - free_memory;
         let memory_usage = used_memory * 100 / total_memory;  
-        this.setCapabilityValue('measure_mem_usage', parseFloat((memory_usage).toFixed(2)));
-        this.setCapabilityValue('measure_mem_used', parseFloat((used_memory/1024).toFixed(2)));
-        this.setCapabilityValue('measure_mem_free', parseFloat((free_memory/1024).toFixed(2)));
-        this.setCapabilityValue('measure_mem_total', parseFloat((total_memory/1024).toFixed(2)));
-        this.setCapabilityValue('measure_cpu_temp', parseInt(sysInfo.QDocRoot.func.ownContent.root.cpu_tempc));
-        this.setCapabilityValue('measure_sys_temp', parseInt(sysInfo.QDocRoot.func.ownContent.root.sys_tempc));
-        this.setCapabilityValue('measure_fan_speed', parseInt(sysInfo.QDocRoot.func.ownContent.root.sysfan1));
+        this.setCapabilityValue('measure_nas_mem_usage', parseFloat((memory_usage).toFixed(2)));
+        this.setCapabilityValue('measure_nas_mem_used', parseFloat((used_memory/1024).toFixed(2)));
+        this.setCapabilityValue('measure_nas_mem_free', parseFloat((free_memory/1024).toFixed(2)));
+        this.setCapabilityValue('measure_nas_mem_total', parseFloat((total_memory/1024).toFixed(2)));
+        this.setCapabilityValue('measure_nas_cpu_temp', parseInt(sysInfo.QDocRoot.func.ownContent.root.cpu_tempc));
+        this.setCapabilityValue('measure_nas_sys_temp', parseInt(sysInfo.QDocRoot.func.ownContent.root.sys_tempc));
+        this.setCapabilityValue('measure_nas_fan_speed', parseInt(sysInfo.QDocRoot.func.ownContent.root.sysfan1));
+        let uptime =    sysInfo.QDocRoot.func.ownContent.root.uptime_day + 
+                        'd ' +
+                        sysInfo.QDocRoot.func.ownContent.root.uptime_hour +
+                        ':' +
+                        sysInfo.QDocRoot.func.ownContent.root.uptime_min +
+                        ':' +
+                        sysInfo.QDocRoot.func.ownContent.root.uptime_sec;
+        this.setCapabilityValue('measure_nas_uptime', uptime);
+        
+        let fwInfo = await qnap.getFirmwareInfo();
+        this.setCapabilityValue('measure_nas_firmware_new_version', fwInfo.newVersion);
     
         // Update child devices: Ethernet eth0...eth3
         await this.updateChildEth(sysInfo.QDocRoot.func.ownContent.root);
 
-        // Get Volume info
-        let volInfo = await qnap.getVolumeInfo();
+        // Get Bandtwith info
+        await this.updateChildBw( await qnap.getBandwidthInfo() );
 
         // Get Disk info
-        this.updateChildHdd( await qnap.getDiskInfo() );
+        await this.updateChildHdd( await qnap.getDiskInfo() );
+
+        // Get Volume info
+        await this.updateChildVol( await qnap.getVolumeInfo() );
 
         return true;
       }
      
       async getSystemInfo(){
           return await qnap.getSystemInfo();
+      }
+
+      async getFirmwareInfo(){
+        return await qnap.getFirmwareInfo();
+      }
+
+      async getBandtwithInfo(){
+        return await qnap.getBandwidthInfo();
       }
 
       async getDiskInfo(){
@@ -138,6 +167,7 @@ class nas extends Device {
       async getVolumeInfo(){
         return await qnap.getVolumeInfo();
       }
+
 
       async updateChildEth(data){
         let devices = this.homey.drivers.getDriver('eth').getDevices();
@@ -165,6 +195,20 @@ class nas extends Device {
         }
       }
 
+      async updateChildBw(data){
+        let devices = this.homey.drivers.getDriver('eth').getDevices();
+        for (let i=0; i<devices.length; i++){
+            if (devices[i].getData().nasId = this.getData().id){
+                //this.log("Device eth NasID: "+devices[i].getData().nasId +" ethID: "+devices[i].getData().ethId) ;
+                // Get the JSON element corresponding to Eth-ID
+                // Eth-device-ID=0 => read element eth0 
+                let bwData = data['eth'+devices[i].getData().ethId];
+                //this.log(bwData);
+                devices[i].updateDeviceBw(bwData)
+            }
+        }
+      }
+
       async updateChildHdd(data){
         let devices = this.homey.drivers.getDriver('hdd').getDevices();
         for (let i=0; i<devices.length; i++){
@@ -175,6 +219,26 @@ class nas extends Device {
                         devices[i].updateDevice(data.entry[j]);
                     }
                 }
+            }
+        }
+      }
+
+      async updateChildVol(data){
+        let devices = this.homey.drivers.getDriver('vol').getDevices();
+        for (let i=0; i<devices.length; i++){
+            if (devices[i].getData().nasId = this.getData().id){
+                //this.log("Device eth NasID: "+devices[i].getData().nasId +" ethID: "+devices[i].getData().ethId) ;
+                for (let j=0; j < data.volumeList.length; j++){
+                    if (data.volumeList[j].volumeValue == devices[i].getData().volId){
+                        devices[i].updateDevice(
+                            {
+                                volume: data.volumeList[j],
+                                volumeUse: data.volumeUseList[j]
+                            }
+                        );
+                    }
+                }
+
             }
         }
       }
@@ -218,7 +282,9 @@ class nas extends Device {
     async onSettings({ oldSettings, newSettings, changedKeys }) {
         this.log('NAS settings where changed');
         if (changedKeys.indexOf("scan_interval") >= 0){
-            this.updateDevice();
+            // Update device data with a short delay of 1sec
+            this.homey.setTimeout(() => 
+                this.updateDevice(),  1000 );
         }
     }
   

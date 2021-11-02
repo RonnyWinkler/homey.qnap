@@ -1,0 +1,25 @@
+{
+    "id": "measure_vol_size_data_changed",
+    "highlight": true,
+    "title": {
+        "en": "The memory used for data has changed ",
+        "de": "Der mit Daten belegte Speicher hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vol"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_vol_size_data",
+            "type": "number",
+            "title": {
+                "en": "Data memory",
+                "de": "Daten-Speicher"
+            }
+        }
+    ]
+}

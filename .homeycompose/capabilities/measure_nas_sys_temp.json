@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "System temperature",
+        "de": "System-Temperatur"
+    },
+    "units": { 
+        "en": "°C",
+        "de": "°C" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_nas_sys.svg"
+}

@@ -1,5 +1,6 @@
 {
     "id": "measure_eth_err_packet_changed",
+    "highlight": true,
     "title": {
         "en": "Error packages have changed",
         "de": "Fehler-Pakete hat sich geändert"

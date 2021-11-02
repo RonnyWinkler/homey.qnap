@@ -144,7 +144,7 @@ class qnap {
     }
 
     isLoggedin(){
-        if (this.authId){
+        if (this.authId && this.authId != ''){
             return true;
         }
         else{
@@ -208,6 +208,11 @@ class qnap {
         }
     }
 
+    async logoff(){
+      // virtual logoff, just delete the sAuth flag to 
+      this.authId = '';
+    }
+
     async getSystemInfo(){
       //console.log("QNAP.getSystemInfo()");
 
@@ -245,6 +250,50 @@ class qnap {
             // console.log(json.QDocRoot.func.ownContent);
 
             return json;
+        }
+        catch(error){
+            //console.log("Error: "+error);
+            throw error;
+        }
+    }
+
+    async getFirmwareInfo(){
+      //console.log("QNAP.getSystemInfo()");
+
+      if (!this.isLoggedin()){
+            throw 'Not logged in!';
+        }
+        
+        let path =  this.path +
+                    'sys/sysRequest.cgi?subfunc=firm_update' +
+                    '&sid=' +
+                    this.authId;
+        let url =   this.protocol + 
+                    this.ip + 
+                    ':' + 
+                    this.port +
+                    path;                    
+        let options = {
+            hostname: this.ip,
+            port: this.port,
+            path: path,
+            method: 'GET',
+            rejectUnauthorized: false
+        }
+        //console.log("URL: "+url);
+        try{
+            // API-call
+            let result = await this.httpGet(url, options);
+            
+            //console.log("Result:");
+            //console.log(result);
+
+            let json = parser.parse(result);
+            // console.log(json);
+            // console.log("QDocRoot.func.ownContent:");
+            // console.log(json.QDocRoot.func.ownContent);
+
+            return json.QDocRoot.func.ownContent;
         }
         catch(error){
             //console.log("Error: "+error);
@@ -292,7 +341,9 @@ class qnap {
           // console.log("folder_element:");
           // console.log(json.QDocRoot.volumeUseList.volumeUse[0].folder_element);
 
-          return json.QDocRoot.volumeUseList;
+          return { 
+            volumeList: json.QDocRoot.volumeList.volume,
+            volumeUseList: json.QDocRoot.volumeUseList.volumeUse };
       }
       catch(error){
           //console.log("Error: "+error);
@@ -346,6 +397,71 @@ class qnap {
       }
     }
 
+    async getBandwidthInfo(){
+      try{
+        //console.log("getBandwidthInfo(new)");
+        let bdInfo = await this.getBandwidthInfoVersion('new');
+        if (!bdInfo.QDocRoot.bandwidth_info){
+          //console.log("getBandwidthInfo(old)");
+          bdInfo = await this.getBandwidthInfoVersion('old');
+        }
+        return bdInfo.QDocRoot.bandwidth_info;
+      }
+      catch(error){
+          //console.log("Error: "+error);
+          throw error;
+      }
+    }
+
+    async getBandwidthInfoVersion(version='new'){
+      //console.log("QNAP.getBandwidthInfo()");
+
+      if (!this.isLoggedin()){
+          throw 'Not logged in!';
+      }
+      let pathVersion = 'management/chartReq.cgi?chart_func=bandwidth'; //Old API-URL unti firmware 4.5.4
+      if (version != 'new'){
+        pathVersion = 'management/chartReq.cgi?chart_func=QSM40bandwidth'; //New API-URL since firmware 4.5.4
+      }
+      let path =  this.path +
+                  //'management/chartReq.cgi?chart_func=QSM40bandwidth' + Old API-URL unti firmware 4.5.4
+                  pathVersion +
+                  '&sid=' +
+                  this.authId;
+      let url =   this.protocol + 
+                  this.ip + 
+                  ':' + 
+                  this.port +
+                  path;                    
+      let options = {
+          hostname: this.ip,
+          port: this.port,
+          path: path,
+          method: 'GET',
+          rejectUnauthorized: false
+      }
+      //console.log("URL: "+url);
+      try{
+          // API-call
+          let result = await this.httpGet(url, options);
+          
+          //console.log("Result:");
+          //console.log(result);
+
+          let json = parser.parse(result);
+          console.log(json);
+          // console.log("Disk_Info:");
+          // console.log(json.QDocRoot.Disk_Info);
+          // console.log("Temperature:");
+          // console.log(json.QDocRoot.Disk_Info.entry[0].Temperature);
+
+          return json;
+      }
+      catch(error){
+          //console.log("Error: "+error);
+          throw error;
+      }
+    }
 
     async httpGet(url, options){
         return new Promise( ( resolve, reject ) =>

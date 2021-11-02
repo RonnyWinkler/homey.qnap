@@ -1,0 +1,25 @@
+{
+    "id": "measure_vol_size_used_changed",
+    "highlight": true,
+    "title": {
+        "en": "The uses memory has changed",
+        "de": "Der belegte Speicher hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vol"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_vol_size_used",
+            "type": "number",
+            "title": {
+                "en": "Used memory",
+                "de": "Belegter Speicher"
+            }
+        }
+    ]
+}

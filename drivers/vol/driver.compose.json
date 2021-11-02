@@ -1,0 +1,57 @@
+{
+  "id": "vol",
+  "name": {
+    "en": "Volume",
+    "de": "Volumen"
+  },
+  "class": "other",
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "capabilities": [
+    "measure_vol_name",
+    "measure_vol_id",
+    "measure_vol_disks",
+    "measure_vol_type",
+
+    "alarm_vol_progress",
+    "measure_vol_progress",
+
+    "measure_vol_size_total",
+    "measure_vol_size_free",
+    "measure_vol_size_used",
+    "measure_vol_size_data",
+    "measure_vol_size_others",
+    "measure_vol_folder"
+  ],
+  "defaultCapabilities": [
+  ],
+  "settings": [
+  ],
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+          "next": "list_devices2"
+      },
+      "options": { "singular": true }
+    },
+    {
+      "id": "list_devices2",
+      "template": "list_devices",
+      "navigation": {
+          "prev": "list_devices",
+          "next": "add_devices"
+      },
+      "options": { "singular": false }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "/drivers/hdd/assets/images/small.png",
+    "large": "/drivers/hdd/assets/images/large.png"
+  }
+}

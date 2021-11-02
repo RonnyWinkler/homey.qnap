@@ -1,0 +1,26 @@
+{
+    "id": "measure_eth_tx_changed",
+    "highlight": true,
+    "title": {
+        "en": "TX/sending data rate has changed",
+        "de": "TX/sendend-Datenrate hat sich geändert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_eth_tx",
+            "type": "string",
+            "title": {
+                "en": "TX/sending kB/s",
+                "de": "TX/sendend kB/s"
+            },
+            "example": "165.4"
+        }
+    ]
+}

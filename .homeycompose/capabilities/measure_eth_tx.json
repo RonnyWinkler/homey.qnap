@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "TX/sending",
+        "de": "TX/sendend"
+    },
+    "units": { 
+        "en": "kB/s",
+        "de": "kB/s" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_eth_tx.svg"
+}

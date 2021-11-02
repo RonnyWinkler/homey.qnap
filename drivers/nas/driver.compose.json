@@ -8,25 +8,27 @@
   "platforms": ["local"],
   "connectivity": ["lan"],
   "capabilities": [
-    "measure_last_update",
-    "measure_model_name",
+    "measure_nas_last_update",
+    "measure_nas_model_name",
 
-    "measure_cpu_usage",
-    "measure_mem_usage",
+    "measure_nas_cpu_usage",
+    "measure_nas_mem_usage",
 
-    "measure_mem_used",
-    "measure_mem_free",
-    "measure_mem_total",
-    "measure_fan_speed",
+    "measure_nas_mem_used",
+    "measure_nas_mem_free",
+    "measure_nas_mem_total",
+    "measure_nas_fan_speed",
 
-    "measure_cpu_temp",
-    "measure_sys_temp",
+    "measure_nas_cpu_temp",
+    "measure_nas_sys_temp",
 
-    "measure_firmware",
-    "measure_firmware_build_time"
+    "measure_nas_firmware",
+    "measure_nas_firmware_build_time",
+    "measure_nas_firmware_new_version",
+    "measure_nas_uptime"
   ],
   "defaultCapabilities": [
-    "measure_cpu_usage"
+    "measure_nas_cpu_usage"
   ],
   "settings": [
     {

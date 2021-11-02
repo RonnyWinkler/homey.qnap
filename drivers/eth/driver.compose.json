@@ -16,6 +16,8 @@
     "measure_eth_ip",
     "measure_eth_mask",
 
+    "measure_eth_rx",
+    "measure_eth_tx",
     "measure_eth_rx_packet",
     "measure_eth_tx_packet",
     "measure_eth_err_packet",
@@ -26,7 +28,7 @@
     "measure_eth_status"
   ],
   "defaultCapabilities": [
-    "measure_eth_ip"
+    "measure_eth_rx"
   ],
   "settings": [
   ],
@@ -46,7 +48,7 @@
           "prev": "list_devices",
           "next": "add_devices"
       },
-      "options": { "singular": true }
+      "options": { "singular": false }
     },
     {
       "id": "add_devices",

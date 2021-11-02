@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.ronnywinkler.homey.qnap",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "name": {
@@ -47,7 +47,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=warndistrict|hdd"
+            "filter": "driver_id=hdd"
           }
         ]
       },
@@ -62,7 +62,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=warndistrict|hdd"
+            "filter": "driver_id=hdd"
           }
         ]
       },
@@ -77,7 +77,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=warndistrict|hdd"
+            "filter": "driver_id=hdd"
           }
         ]
       },
@@ -92,59 +92,37 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=warndistrict|hdd"
+            "filter": "driver_id=hdd"
           }
         ]
       },
       {
-        "id": "measure_cpu_temp_changed",
+        "id": "alarm_vol_progress_false",
         "highlight": true,
         "title": {
-          "en": "The CPU temperature has changed",
-          "de": "Die CPU-Temperatur hat sich geändert"
+          "en": "The volume is ready",
+          "de": "Das Volume ist bereit"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=nas"
-          }
-        ],
-        "tokens": [
-          {
-            "name": "measure_cpu_temp",
-            "type": "number",
-            "title": {
-              "en": "CPU temp.",
-              "de": "CPU-Temp."
-            },
-            "example": "35"
+            "filter": "driver_id=vol"
           }
         ]
       },
       {
-        "id": "measure_cpu_usage_changed",
+        "id": "alarm_vol_progress_true",
         "highlight": true,
         "title": {
-          "en": "The CPU usage has changed",
-          "de": "Die CPU-Auslastung hat sich geändert"
+          "en": "The volume is in progress",
+          "de": "Das Volume ist in Verarbeitung"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=nas"
-          }
-        ],
-        "tokens": [
-          {
-            "name": "measure_cpu_usage",
-            "type": "number",
-            "title": {
-              "en": "CPU usage",
-              "de": "CPU-Auslastung"
-            },
-            "example": "15"
+            "filter": "driver_id=vol"
           }
         ]
       },
@@ -200,6 +178,7 @@
       },
       {
         "id": "measure_eth_err_packet_changed",
+        "highlight": true,
         "title": {
           "en": "Error packages have changed",
           "de": "Fehler-Pakete hat sich geändert"
@@ -275,6 +254,32 @@
         ]
       },
       {
+        "id": "measure_eth_rx_changed",
+        "highlight": true,
+        "title": {
+          "en": "RX/receiving data rate has changed",
+          "de": "RX/empfangend-Datenrate hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_eth_rx",
+            "type": "string",
+            "title": {
+              "en": "RX/receiving kB/s",
+              "de": "RX/empfangend kB/s"
+            },
+            "example": "165.4"
+          }
+        ]
+      },
+      {
         "id": "measure_eth_rx_packet_changed",
         "title": {
           "en": "Received packages have changed",
@@ -326,6 +331,32 @@
         ]
       },
       {
+        "id": "measure_eth_tx_changed",
+        "highlight": true,
+        "title": {
+          "en": "TX/sending data rate has changed",
+          "de": "TX/sendend-Datenrate hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=eth"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_eth_tx",
+            "type": "string",
+            "title": {
+              "en": "TX/sending kB/s",
+              "de": "TX/sendend kB/s"
+            },
+            "example": "165.4"
+          }
+        ]
+      },
+      {
         "id": "measure_eth_tx_packet_changed",
         "title": {
           "en": "Transmitted packages have changed",
@@ -351,7 +382,85 @@
         ]
       },
       {
-        "id": "measure_fan_speed_changed",
+        "id": "measure_hdd_temp_changed",
+        "highlight": true,
+        "title": {
+          "en": "The HDD temperature has changed",
+          "de": "Die HDD-Temperatur hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=hdd"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_hdd_temp",
+            "type": "number",
+            "title": {
+              "en": "HDD temp.",
+              "de": "HDD-Temp."
+            },
+            "example": "35"
+          }
+        ]
+      },
+      {
+        "id": "measure_nas_cpu_temp_changed",
+        "highlight": true,
+        "title": {
+          "en": "The CPU temperature has changed",
+          "de": "Die CPU-Temperatur hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_nas_cpu_temp",
+            "type": "number",
+            "title": {
+              "en": "CPU temp.",
+              "de": "CPU-Temp."
+            },
+            "example": "35"
+          }
+        ]
+      },
+      {
+        "id": "measure_nas_cpu_usage_changed",
+        "highlight": true,
+        "title": {
+          "en": "The CPU usage has changed",
+          "de": "Die CPU-Auslastung hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_nas_cpu_usage",
+            "type": "number",
+            "title": {
+              "en": "CPU usage",
+              "de": "CPU-Auslastung"
+            },
+            "example": "15"
+          }
+        ]
+      },
+      {
+        "id": "measure_nas_fan_speed_changed",
         "title": {
           "en": "The fan speed has changed",
           "de": "Die Lüfter-Geschwindigkeit hat sich geändert"
@@ -365,7 +474,7 @@
         ],
         "tokens": [
           {
-            "name": "measure_fan_speed",
+            "name": "measure_nas_fan_speed",
             "type": "number",
             "title": {
               "en": "fan speed",
@@ -376,7 +485,7 @@
         ]
       },
       {
-        "id": "measure_firmware_build_time_changed",
+        "id": "measure_nas_firmware_build_time_changed",
         "title": {
           "en": "The firmware date has changed",
           "de": "Das Firmware-Datum hat sich geändert"
@@ -390,7 +499,7 @@
         ],
         "tokens": [
           {
-            "name": "measure_firmware_build_time",
+            "name": "measure_nas_firmware_build_time",
             "type": "string",
             "title": {
               "en": "firmware date",
@@ -401,7 +510,7 @@
         ]
       },
       {
-        "id": "measure_firmware_changed",
+        "id": "measure_nas_firmware_changed",
         "title": {
           "en": "The firmware version has changed",
           "de": "Die Firmware-Version hat sich geändert"
@@ -415,7 +524,7 @@
         ],
         "tokens": [
           {
-            "name": "measure_firmware",
+            "name": "measure_nas_firmware",
             "type": "string",
             "title": {
               "en": "firmware version",
@@ -426,7 +535,7 @@
         ]
       },
       {
-        "id": "measure_mem_free_changed",
+        "id": "measure_nas_mem_free_changed",
         "title": {
           "en": "The free memory has changed",
           "de": "Der freie Speicher hat sich geändert"
@@ -440,7 +549,7 @@
         ],
         "tokens": [
           {
-            "name": "measure_mem_free",
+            "name": "measure_nas_mem_free",
             "type": "number",
             "title": {
               "en": "Free memory",
@@ -450,7 +559,7 @@
         ]
       },
       {
-        "id": "measure_mem_total_changed",
+        "id": "measure_nas_mem_total_changed",
         "title": {
           "en": "The total memory has changed",
           "de": "Der Gesamt-Speicher hat sich geändert"
@@ -464,7 +573,7 @@
         ],
         "tokens": [
           {
-            "name": "measure_mem_total",
+            "name": "measure_nas_mem_total",
             "type": "number",
             "title": {
               "en": "Total memory",
@@ -474,7 +583,7 @@
         ]
       },
       {
-        "id": "measure_mem_usage_changed",
+        "id": "measure_nas_mem_usage_changed",
         "highlight": true,
         "title": {
           "en": "The memory usage has changed",
@@ -489,7 +598,7 @@
         ],
         "tokens": [
           {
-            "name": "measure_mem_usage",
+            "name": "measure_nas_mem_usage",
             "type": "number",
             "title": {
               "en": "Memory usage",
@@ -500,7 +609,7 @@
         ]
       },
       {
-        "id": "measure_mem_used_changed",
+        "id": "measure_nas_mem_used_changed",
         "title": {
           "en": "The used memory has changed",
           "de": "Der belegte Speicher hat sich geändert"
@@ -514,7 +623,7 @@
         ],
         "tokens": [
           {
-            "name": "measure_mem_used",
+            "name": "measure_nas_mem_used",
             "type": "number",
             "title": {
               "en": "Used memory",
@@ -524,7 +633,7 @@
         ]
       },
       {
-        "id": "measure_sys_temp_changed",
+        "id": "measure_nas_sys_temp_changed",
         "highlight": true,
         "title": {
           "en": "The system temperature has changed",
@@ -539,13 +648,163 @@
         ],
         "tokens": [
           {
-            "name": "measure_sys_temp",
+            "name": "measure_nas_sys_temp",
             "type": "number",
             "title": {
               "en": "System temp.",
               "de": "System-Temp."
             },
             "example": "45"
+          }
+        ]
+      },
+      {
+        "id": "measure_vol_progress_changed",
+        "highlight": true,
+        "title": {
+          "en": "The progress has changed",
+          "de": "Der Verabeitungsfortschritt hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vol"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_vol_progress",
+            "type": "number",
+            "title": {
+              "en": "Progress",
+              "de": "Verabeitungsfortschritt"
+            }
+          }
+        ]
+      },
+      {
+        "id": "measure_vol_size_data_changed",
+        "highlight": true,
+        "title": {
+          "en": "The memory used for data has changed ",
+          "de": "Der mit Daten belegte Speicher hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vol"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_vol_size_data",
+            "type": "number",
+            "title": {
+              "en": "Data memory",
+              "de": "Daten-Speicher"
+            }
+          }
+        ]
+      },
+      {
+        "id": "measure_vol_size_free_changed",
+        "highlight": true,
+        "title": {
+          "en": "The free memory has changed",
+          "de": "Der freie Speicher hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vol"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_vol_size_free",
+            "type": "number",
+            "title": {
+              "en": "Free memory",
+              "de": "Freier Speicher"
+            }
+          }
+        ]
+      },
+      {
+        "id": "measure_vol_size_others_changed",
+        "highlight": true,
+        "title": {
+          "en": "The memory used for system data has changed",
+          "de": "Der mit Systemdaten belegte Speicher hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vol"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_vol_size_others",
+            "type": "number",
+            "title": {
+              "en": "System memory",
+              "de": "System-Speicher"
+            }
+          }
+        ]
+      },
+      {
+        "id": "measure_vol_size_total_changed",
+        "highlight": true,
+        "title": {
+          "en": "The total memory has changed",
+          "de": "Der Gesamt-Speicher hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vol"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_vol_size_total_changed",
+            "type": "number",
+            "title": {
+              "en": "Total memory",
+              "de": "Gesamt-Speicher"
+            }
+          }
+        ]
+      },
+      {
+        "id": "measure_vol_size_used_changed",
+        "highlight": true,
+        "title": {
+          "en": "The uses memory has changed",
+          "de": "Der belegte Speicher hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=vol"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_vol_size_used",
+            "type": "number",
+            "title": {
+              "en": "Used memory",
+              "de": "Belegter Speicher"
+            }
           }
         ]
       }
@@ -572,6 +831,8 @@
         "measure_eth_ip_alloc",
         "measure_eth_ip",
         "measure_eth_mask",
+        "measure_eth_rx",
+        "measure_eth_tx",
         "measure_eth_rx_packet",
         "measure_eth_tx_packet",
         "measure_eth_err_packet",
@@ -581,7 +842,7 @@
         "measure_eth_status"
       ],
       "defaultCapabilities": [
-        "measure_eth_ip"
+        "measure_eth_rx"
       ],
       "settings": [],
       "pair": [
@@ -603,7 +864,7 @@
             "next": "add_devices"
           },
           "options": {
-            "singular": true
+            "singular": false
           }
         },
         {
@@ -663,7 +924,7 @@
             "next": "add_devices"
           },
           "options": {
-            "singular": true
+            "singular": false
           }
         },
         {
@@ -690,21 +951,23 @@
         "lan"
       ],
       "capabilities": [
-        "measure_last_update",
-        "measure_model_name",
-        "measure_cpu_usage",
-        "measure_mem_usage",
-        "measure_mem_used",
-        "measure_mem_free",
-        "measure_mem_total",
-        "measure_fan_speed",
-        "measure_cpu_temp",
-        "measure_sys_temp",
-        "measure_firmware",
-        "measure_firmware_build_time"
+        "measure_nas_last_update",
+        "measure_nas_model_name",
+        "measure_nas_cpu_usage",
+        "measure_nas_mem_usage",
+        "measure_nas_mem_used",
+        "measure_nas_mem_free",
+        "measure_nas_mem_total",
+        "measure_nas_fan_speed",
+        "measure_nas_cpu_temp",
+        "measure_nas_sys_temp",
+        "measure_nas_firmware",
+        "measure_nas_firmware_build_time",
+        "measure_nas_firmware_new_version",
+        "measure_nas_uptime"
       ],
       "defaultCapabilities": [
-        "measure_cpu_usage"
+        "measure_nas_cpu_usage"
       ],
       "settings": [
         {
@@ -811,6 +1074,67 @@
         "small": "/drivers/nas/assets/images/small.png",
         "large": "/drivers/nas/assets/images/large.png"
       }
+    },
+    {
+      "id": "vol",
+      "name": {
+        "en": "Volume",
+        "de": "Volumen"
+      },
+      "class": "other",
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "capabilities": [
+        "measure_vol_name",
+        "measure_vol_id",
+        "measure_vol_disks",
+        "measure_vol_type",
+        "alarm_vol_progress",
+        "measure_vol_progress",
+        "measure_vol_size_total",
+        "measure_vol_size_free",
+        "measure_vol_size_used",
+        "measure_vol_size_data",
+        "measure_vol_size_others",
+        "measure_vol_folder"
+      ],
+      "defaultCapabilities": [],
+      "settings": [],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "list_devices2"
+          },
+          "options": {
+            "singular": true
+          }
+        },
+        {
+          "id": "list_devices2",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "list_devices",
+            "next": "add_devices"
+          },
+          "options": {
+            "singular": false
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "images": {
+        "small": "/drivers/hdd/assets/images/small.png",
+        "large": "/drivers/hdd/assets/images/large.png"
+      }
     }
   ],
   "capabilities": {
@@ -838,37 +1162,17 @@
       "insights": true,
       "icon": "/assets/alarm_hdd_temp.svg"
     },
-    "measure_cpu_temp": {
-      "type": "number",
+    "alarm_vol_progress": {
+      "type": "boolean",
       "title": {
-        "en": "CPU temperature",
-        "de": "CPU-Temperatur"
-      },
-      "units": {
-        "en": "°C",
-        "de": "°C"
+        "en": "In progress",
+        "de": "In Verarbeitung"
       },
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
-      "icon": "/assets/measure_cpu.svg"
-    },
-    "measure_cpu_usage": {
-      "type": "number",
-      "title": {
-        "en": "CPU usage",
-        "de": "CPU-Auslastung"
-      },
-      "units": {
-        "en": "%",
-        "de": "%"
-      },
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/measure_cpu.svg"
+      "icon": "/assets/alarm_vol_progress.svg"
     },
     "measure_eth_dns1": {
       "type": "string",
@@ -998,6 +1302,22 @@
       "insights": false,
       "icon": "/assets/measure_eth_name.svg"
     },
+    "measure_eth_rx": {
+      "type": "number",
+      "title": {
+        "en": "RX/receiving",
+        "de": "RX/empfangend"
+      },
+      "units": {
+        "en": "kB/s",
+        "de": "kB/s"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_eth_rx.svg"
+    },
     "measure_eth_rx_packet": {
       "type": "number",
       "title": {
@@ -1026,6 +1346,22 @@
       "insights": false,
       "icon": "/assets/measure_eth_status.svg"
     },
+    "measure_eth_tx": {
+      "type": "number",
+      "title": {
+        "en": "TX/sending",
+        "de": "TX/sendend"
+      },
+      "units": {
+        "en": "kB/s",
+        "de": "kB/s"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_eth_tx.svg"
+    },
     "measure_eth_tx_packet": {
       "type": "number",
       "title": {
@@ -1041,46 +1377,6 @@
       "uiComponent": "sensor",
       "insights": false,
       "icon": "/assets/measure_eth_tx_packet.svg"
-    },
-    "measure_fan_speed": {
-      "type": "number",
-      "title": {
-        "en": "Fan speed",
-        "de": "Lüfter Geschw."
-      },
-      "units": {
-        "en": "rpm",
-        "de": "U/min"
-      },
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/measure_fan.svg"
-    },
-    "measure_firmware": {
-      "type": "string",
-      "title": {
-        "en": "Firmware",
-        "de": "Firmware"
-      },
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/measure_firmware.svg"
-    },
-    "measure_firmware_build_time": {
-      "type": "string",
-      "title": {
-        "en": "Firmware date",
-        "de": "Firmware-Datum"
-      },
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "insights": false,
-      "icon": "/assets/measure_firmware_build_time.svg"
     },
     "measure_hdd_capacity": {
       "type": "string",
@@ -1170,7 +1466,91 @@
       "insights": false,
       "icon": "/assets/measure_hdd.svg"
     },
-    "measure_last_update": {
+    "measure_nas_cpu_temp": {
+      "type": "number",
+      "title": {
+        "en": "CPU temperature",
+        "de": "CPU-Temperatur"
+      },
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_nas_cpu.svg"
+    },
+    "measure_nas_cpu_usage": {
+      "type": "number",
+      "title": {
+        "en": "CPU usage",
+        "de": "CPU-Auslastung"
+      },
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_nas_cpu.svg"
+    },
+    "measure_nas_fan_speed": {
+      "type": "number",
+      "title": {
+        "en": "Fan speed",
+        "de": "Lüfter Geschw."
+      },
+      "units": {
+        "en": "rpm",
+        "de": "U/min"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_nas_fan.svg"
+    },
+    "measure_nas_firmware": {
+      "type": "string",
+      "title": {
+        "en": "Firmware",
+        "de": "Firmware"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_nas_firmware.svg"
+    },
+    "measure_nas_firmware_build_time": {
+      "type": "string",
+      "title": {
+        "en": "Firmware date",
+        "de": "Firmware-Datum"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_nas_firmware_build_time.svg"
+    },
+    "measure_nas_firmware_new_version": {
+      "type": "string",
+      "title": {
+        "en": "available firmware",
+        "de": "verfügbare Firmware"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_nas_firmware_new_version.svg"
+    },
+    "measure_nas_last_update": {
       "type": "string",
       "title": {
         "en": "Last update",
@@ -1180,9 +1560,9 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": false,
-      "icon": "/assets/measure_last_update.svg"
+      "icon": "/assets/measure_nas_last_update.svg"
     },
-    "measure_mem_free": {
+    "measure_nas_mem_free": {
       "type": "number",
       "title": {
         "en": "Memory free",
@@ -1196,9 +1576,9 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
-      "icon": "/assets/measure_mem.svg"
+      "icon": "/assets/measure_nas_mem.svg"
     },
-    "measure_mem_total": {
+    "measure_nas_mem_total": {
       "type": "number",
       "title": {
         "en": "Memory total",
@@ -1212,9 +1592,9 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
-      "icon": "/assets/measure_mem.svg"
+      "icon": "/assets/measure_nas_mem.svg"
     },
-    "measure_mem_usage": {
+    "measure_nas_mem_usage": {
       "type": "number",
       "title": {
         "en": "Memory usage",
@@ -1228,9 +1608,9 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
-      "icon": "/assets/measure_mem.svg"
+      "icon": "/assets/measure_nas_mem.svg"
     },
-    "measure_mem_used": {
+    "measure_nas_mem_used": {
       "type": "number",
       "title": {
         "en": "Memory used",
@@ -1244,9 +1624,9 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
-      "icon": "/assets/measure_mem.svg"
+      "icon": "/assets/measure_nas_mem.svg"
     },
-    "measure_model_name": {
+    "measure_nas_model_name": {
       "type": "string",
       "title": {
         "en": "Model",
@@ -1256,9 +1636,9 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": false,
-      "icon": "/assets/measure_model.svg"
+      "icon": "/assets/measure_nas_model.svg"
     },
-    "measure_sys_temp": {
+    "measure_nas_sys_temp": {
       "type": "number",
       "title": {
         "en": "System temperature",
@@ -1272,7 +1652,179 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
-      "icon": "/assets/measure_sys.svg"
+      "icon": "/assets/measure_nas_sys.svg"
+    },
+    "measure_nas_uptime": {
+      "type": "string",
+      "title": {
+        "en": "Uptime",
+        "de": "Betriebszeit"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_nas_uptime.svg"
+    },
+    "measure_vol_disks": {
+      "type": "string",
+      "title": {
+        "en": "Disks",
+        "de": "Laufwerke"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_vol_disks.svg"
+    },
+    "measure_vol_folder": {
+      "type": "number",
+      "title": {
+        "en": "Folder",
+        "de": "Verzeichnisse"
+      },
+      "units": {
+        "en": "",
+        "de": ""
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_vol_folder.svg"
+    },
+    "measure_vol_id": {
+      "type": "number",
+      "title": {
+        "en": "ID",
+        "de": "ID"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_vol_id.svg"
+    },
+    "measure_vol_name": {
+      "type": "string",
+      "title": {
+        "en": "Name",
+        "de": "Name"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_vol_name.svg"
+    },
+    "measure_vol_progress": {
+      "type": "number",
+      "title": {
+        "en": "Progress",
+        "de": "Verarbeitung"
+      },
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_vol_progress.svg"
+    },
+    "measure_vol_size_data": {
+      "type": "number",
+      "title": {
+        "en": "Data",
+        "de": "Daten"
+      },
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_vol_size_data.svg"
+    },
+    "measure_vol_size_free": {
+      "type": "number",
+      "title": {
+        "en": "Free",
+        "de": "Frei"
+      },
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_vol_size_free.svg"
+    },
+    "measure_vol_size_others": {
+      "type": "number",
+      "title": {
+        "en": "System",
+        "de": "System"
+      },
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_vol_size_others.svg"
+    },
+    "measure_vol_size_total": {
+      "type": "number",
+      "title": {
+        "en": "Total",
+        "de": "Gesamt"
+      },
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_vol_size_total.svg"
+    },
+    "measure_vol_size_used": {
+      "type": "number",
+      "title": {
+        "en": "Used",
+        "de": "Belegt"
+      },
+      "units": {
+        "en": "GB",
+        "de": "GB"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_vol_size_used.svg"
+    },
+    "measure_vol_type": {
+      "type": "string",
+      "title": {
+        "en": "Type",
+        "de": "Typ"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_vol_type.svg"
     }
   }
 }
