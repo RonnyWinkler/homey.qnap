@@ -1,0 +1,8 @@
+{
+    "type": "ssdp",
+    "ssdp": {
+        "search": "urn:"
+    },
+    "id": "{{headers.usn}}"
+    
+}
