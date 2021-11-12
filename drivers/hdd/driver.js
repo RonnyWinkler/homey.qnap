@@ -104,6 +104,11 @@ class hddDriver extends Driver {
     for (let i=0; i<nasList.length; i++){
       if (nasList[i].getData().id == this.selectedNas.data.nasId){
         let hddInfo = await nasList[i].getDiskInfo();
+        this.log(hddInfo);
+        // DiagnosticLog
+        this.homey.app.writeLog("HDD pairing - devices list:");
+        this.homey.app.writeLog(hddInfo);
+
         for (let j=0; j < hddInfo.entry.length; j++){
           devices.push(
             {

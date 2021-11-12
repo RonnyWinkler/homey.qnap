@@ -19,6 +19,10 @@ class vol extends Device {
         this.log("updateDevice() NAS-ID"+ this.getData().nasId +" Vol-ID: "+this.getData().volId+' Name: '+this.getName());
         this.log(volData);
 
+        // DiagnosticLog
+        this.homey.app.writeLog("Volume-Update NAS-ID"+ this.getData().nasId +" Vol-ID: "+this.getData().volId+' Name: '+this.getName());
+        this.homey.app.writeLog(volData);
+
         // "measure_vol_name",
         // "measure_vol_id",
         // "measure_vol_disks",

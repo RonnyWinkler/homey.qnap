@@ -20,6 +20,10 @@ class eth extends Device {
         this.log("updateDevice() NAS-ID"+ this.getData().nasId +" Eth-ID: "+this.getData().ethId+' Name: '+this.getName());
         this.log(ethData);
 
+        // DiagnosticLog
+        this.homey.app.writeLog("Ethernet-Update NAS-ID"+ this.getData().nasId +" Eth-ID: "+this.getData().ethId+' Name: '+this.getName());
+        this.homey.app.writeLog(ethData);
+
         this.setCapabilityValue('measure_eth_id', ethData.ifname);
         this.setCapabilityValue('measure_eth_name', ethData.dname);
         this.setCapabilityValue('measure_eth_mac', ethData.eth_mac);
@@ -55,6 +59,11 @@ class eth extends Device {
       async updateDeviceBw(bwData){
         this.log("updateDeviceBw() NAS-ID"+ this.getData().nasId +" Eth-ID: "+this.getData().ethId+' Name: '+this.getName());
         this.log(bwData);
+
+        // DiagnosticLog
+        this.homey.app.writeLog("Bandwith-Update NAS-ID"+ this.getData().nasId +" Eth-ID: "+this.getData().ethId+' Name: '+this.getName());
+        this.homey.app.writeLog(bwData);
+
         // calculate MB/s, correction with /5 to get identival data like in QTS
         this.setCapabilityValue('measure_eth_tx', Math.round((parseInt(bwData.tx) / 1000 / 8) *100) / 100 );
         this.setCapabilityValue('measure_eth_rx', Math.round((parseInt(bwData.rx) / 1000 / 8) *100) / 100 );

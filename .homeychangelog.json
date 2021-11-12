@@ -18,5 +18,33 @@
   "0.0.5": {
     "en": "Get ready for app store",
     "de": "Vorbereitung für App-Store"
+  },
+  "0.0.6": {
+    "en": "Added diagnostics log to app settings page",
+    "de": "Diagnose-Log zu App-Einstellungen hinzugefügt"
+  },
+  "0.0.7": {
+    "en": "Added diagnostics log to app settings page",
+    "de": "Diagnose-Log zu App-Einstellungen hinzugefügt"
+  },
+  "0.0.8": {
+    "en": "Support for older webservice version",
+    "de": "Unterstützung für ältere Webservice-Version"
+  },
+  "0.0.9": {
+    "en": "Support for older webservice version",
+    "de": "Unterstützung für ältere Webservice-Version"
+  },
+  "0.0.10": {
+    "en": "Improvements to add more than one NAS device",
+    "de": "Verbesserung zur Einbindung mehrerer NAS-Geräte"
+  },
+  "0.0.11": {
+    "en": "Added pairing log",
+    "de": "Pairing-Log ergänzt"
+  },
+  "0.0.12": {
+    "en": "Added Sys/CPU temp. alarm. Fixed single-volume issue.",
+    "de": "Sys/CPU Temp.Alarm ergänzt. Einzel-Volume-Fehler behoben."
   }
 }

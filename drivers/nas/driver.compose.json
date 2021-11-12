@@ -21,11 +21,22 @@
 
     "measure_nas_cpu_temp",
     "measure_nas_sys_temp",
+    "alarm_cpu_temp",
+    "alarm_sys_temp",
 
     "measure_nas_firmware",
     "measure_nas_firmware_build_time",
     "measure_nas_firmware_new_version",
-    "measure_nas_uptime"
+    "measure_nas_uptime",
+
+    "measure_nas_temp_warn_cpu",
+    "measure_nas_temp_error_cpu",
+    "measure_nas_temp_warn_sys",
+    "measure_nas_temp_error_sys",
+    "measure_nas_temp_warn_hdd",
+    "measure_nas_temp_error_hdd",
+    "measure_nas_temp_warn_ssd",
+    "measure_nas_temp_error_ssd"
   ],
   "defaultCapabilities": [
     "measure_nas_cpu_usage"

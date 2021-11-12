@@ -74,6 +74,10 @@ class volDriver extends Driver {
       if (nasList[i].getData().id == this.selectedNas.data.nasId){
         let volInfo = await nasList[i].getVolumeInfo();
         this.log(volInfo);
+        // DiagnosticLog
+        this.homey.app.writeLog("Volume pairing - devices list:");
+        this.homey.app.writeLog(volInfo);
+
         for (let j=0; j < volInfo.volumeList.length; j++){
           devices.push(
             {

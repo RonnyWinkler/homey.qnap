@@ -332,7 +332,11 @@ class qnap {
           //console.log("Result:");
           //console.log(result);
 
-          let json = parser.parse(result);
+          // let json = parser.parse(result);
+          let json = parser.parse(result, {
+            arrayMode: tagName => ['volume', 'volumeUse'].includes(tagName)
+          });
+
           // console.log(json);
           // console.log("volumeList:");
           // console.log(json.QDocRoot.volumeList);
@@ -374,7 +378,7 @@ class qnap {
           method: 'GET',
           rejectUnauthorized: false
       }
-      console.log("URL: "+url);
+      //console.log("URL: "+url);
       try{
           // API-call
           let result = await this.httpGet(url, options);

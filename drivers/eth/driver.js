@@ -97,6 +97,11 @@ class ethDriver extends Driver {
     for (let i=0; i<nasList.length; i++){
       if (nasList[i].getData().id == this.selectedNas.data.nasId){
         let sysInfo = await nasList[i].getSystemInfo();
+        this.log(sysInfo);
+        // DiagnosticLog
+        this.homey.app.writeLog("Ethernet pairing - devices list:");
+        this.homey.app.writeLog(sysInfo);
+
         let nicCount = parseInt(sysInfo.QDocRoot.func.ownContent.root.nic_cnt);
         for (let j=0; j < nicCount; j++){
           devices.push(

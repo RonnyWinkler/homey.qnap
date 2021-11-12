@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Error temperature HDD",
+        "de": "Fehlertemperatur HDD"
+    },
+    "units": { 
+        "en": "°C",
+        "de": "°C" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": null,
+    "insights": false,
+    "icon": "/assets/measure_nas_temp_error.svg"
+}

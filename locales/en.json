@@ -1,5 +1,8 @@
 {
     "settings": {
+        "diagnosticsLog": "Diagnostics log",
+        "logEnabled": "Log enabled",
+        "clearLog": "Clear log"
     },
     "pair": {
         "title_nas_data": "LAN connection to NAS",

@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Warning temperature SSD",
+        "de": "Warntemperatur SSD"
+    },
+    "units": { 
+        "en": "°C",
+        "de": "°C" 
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": null,
+    "insights": false,
+    "icon": "/assets/measure_nas_temp_warn.svg"
+}

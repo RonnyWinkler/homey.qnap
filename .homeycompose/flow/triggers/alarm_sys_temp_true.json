@@ -1,0 +1,15 @@
+{
+    "id": "alarm_sys_temp_true",
+    "highlight": true,
+    "title": {
+        "en": "System temperature alarm has been activated",
+        "de": "System-Temperatur-Alarm wurde aktiviert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+        }
+      ]
+}

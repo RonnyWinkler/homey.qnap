@@ -3,7 +3,6 @@
 const { Device } = require('homey');
 
 const qnapApi = require('../../qnapApi');
-const qnap = new qnapApi();
 const defaultScanInterval = 5;
 
 class nas extends Device {
@@ -14,14 +13,45 @@ class nas extends Device {
         this.log('NAS has been initialized');
   
         await this.updateCapabilities();
+
+        this.qnap = new qnapApi();
   
         // Start update-loop
         this.updateDevice();
       }
   
       async updateCapabilities(){
-          // Add new capabilities (if not already added)
-
+        // Add new capabilities (if not already added)
+        if (!this.hasCapability("measure_nas_temp_warn_cpu")){
+            await this.addCapability("measure_nas_temp_warn_cpu");
+        }
+        if (!this.hasCapability("measure_nas_temp_error_cpu")){
+            await this.addCapability("measure_nas_temp_error_cpu");
+        }
+        if (!this.hasCapability("measure_nas_temp_warn_sys")){
+            await this.addCapability("measure_nas_temp_warn_sys");
+        }
+        if (!this.hasCapability("measure_nas_temp_error_sys")){
+            await this.addCapability("measure_nas_temp_error_sys");
+        }
+        if (!this.hasCapability("measure_nas_temp_warn_hdd")){
+            await this.addCapability("measure_nas_temp_warn_hdd");
+        }
+        if (!this.hasCapability("measure_nas_temp_error_hdd")){
+            await this.addCapability("measure_nas_temp_error_hdd");
+        }
+        if (!this.hasCapability("measure_nas_temp_warn_ssd")){
+            await this.addCapability("measure_nas_temp_warn_ssd");
+        }
+        if (!this.hasCapability("measure_nas_temp_error_ssd")){
+            await this.addCapability("measure_nas_temp_error_ssd");
+        }
+        if (!this.hasCapability("alarm_cpu_temp")){
+            await this.addCapability("alarm_cpu_temp");
+        }
+        if (!this.hasCapability("alarm_sys_temp")){
+            await this.addCapability("alarm_sys_temp");
+        }
       }
     
     async setDeviceAvailable(){
@@ -58,6 +88,10 @@ class nas extends Device {
 
       async updateDevice(){
         this.log("updateDevice() NAS-ID: "+this.getData().id+' Name: '+this.getName());
+        
+        // DiagnosticLog
+        this.homey.app.writeLog("Device-Update NAS-ID: "+this.getData().id+' Name: '+this.getName());
+        
         let scanInterval = await this.getSetting('scan_interval');
         if (!scanInterval || scanInterval <= 0){
             scanInterval = defaultScanInterval;
@@ -69,103 +103,215 @@ class nas extends Device {
         this.timeoutupdateDevice = this.homey.setTimeout(() => 
             this.updateDevice(),  scanInterval * 1000 * 60 );
 
-        if (!qnap.isLoggedin()){
+        if (!this.qnap.isLoggedin()){
             try{
-                let loggedIn = await qnap.login(
+                // DiagnosticLog
+                this.homey.app.writeLog("Login...");
+                this.log("Login...");
+
+                let loggedIn = await this.qnap.login(
                         this.getStoreValue('ip'), 
                         this.getStoreValue('port'), 
                         this.getStoreValue('user'), 
                         this.getStoreValue('pw'));
                 if (!loggedIn){
                     this.error('Login-Error, set devices unavailable. Retry at next scan interval.');
+
+                    // DiagnosticLog
+                    this.homey.app.writeLog("Login-Error! "+error.stack);
+
                     // Not logged in: Set device unavailable
                     this.setDeviceUnavailable();
                     //throw 'Login-Error, retry at next scan interval.';
                     return false;
+                }
+                else{
+                    // DiagnosticLog
+                    this.homey.app.writeLog("Login ok");
+                    this.log("Login ok");
                 }
             }
             catch(error){
                 this.error('Login-Error: '+error+' Set devices unavailable.');
                 // Not logged in: Set device unavailable
                 this.setDeviceUnavailable();
+
+                // DiagnosticLog
+                this.homey.app.writeLog("Login-Error! "+error.stack);
+
                 //throw 'Login-Error: '+error;
                 return false;
             }
         }
         // Proceed with getting device data.
-        let sysInfo = await qnap.getSystemInfo();
+        let sysInfo = await this.qnap.getSystemInfo();
         this.log(sysInfo);
+
+        // DiagnosticLog
+        this.homey.app.writeLog("NAS system data:");
+        this.homey.app.writeLog(sysInfo);
+
         //check for auth or user rights...
         if (sysInfo.QDocRoot.authPassed == '0'){
             this.error('Login/Auth/Right-Error. Set devices unavailable.');
             this.setDeviceUnavailable();
-            qnap.logoff();
+            this.qnap.logoff();
             return false;
         }
         // Logged in: Set device available
         this.setDeviceAvailable();
+        this.log(sysInfo.QDocRoot.func.ownContent.root);
         // Set device data...
-        this.setCapabilityValue('measure_nas_last_update', await this.convertDateToString(new Date()));
-        this.setCapabilityValue('measure_nas_model_name', sysInfo.QDocRoot.model.displayModelName);
-        this.setCapabilityValue('measure_nas_firmware', sysInfo.QDocRoot.firmware.version + '.' + sysInfo.QDocRoot.firmware.number);
-        this.setCapabilityValue('measure_nas_firmware_build_time', sysInfo.QDocRoot.firmware.buildTime);
-        this.setCapabilityValue('measure_nas_cpu_usage', parseFloat(parseFloat(sysInfo.QDocRoot.func.ownContent.root.cpu_usage.split(' ')[0]).toFixed(2)));
-        let total_memory = parseFloat(sysInfo.QDocRoot.func.ownContent.root.total_memory);
-        let free_memory = parseFloat(sysInfo.QDocRoot.func.ownContent.root.free_memory);
-        let used_memory = total_memory - free_memory;
-        let memory_usage = used_memory * 100 / total_memory;  
-        this.setCapabilityValue('measure_nas_mem_usage', parseFloat((memory_usage).toFixed(2)));
-        this.setCapabilityValue('measure_nas_mem_used', parseFloat((used_memory/1024).toFixed(2)));
-        this.setCapabilityValue('measure_nas_mem_free', parseFloat((free_memory/1024).toFixed(2)));
-        this.setCapabilityValue('measure_nas_mem_total', parseFloat((total_memory/1024).toFixed(2)));
-        this.setCapabilityValue('measure_nas_cpu_temp', parseInt(sysInfo.QDocRoot.func.ownContent.root.cpu_tempc));
-        this.setCapabilityValue('measure_nas_sys_temp', parseInt(sysInfo.QDocRoot.func.ownContent.root.sys_tempc));
-        this.setCapabilityValue('measure_nas_fan_speed', parseInt(sysInfo.QDocRoot.func.ownContent.root.sysfan1));
-        let uptime =    sysInfo.QDocRoot.func.ownContent.root.uptime_day + 
-                        'd ' +
-                        sysInfo.QDocRoot.func.ownContent.root.uptime_hour +
-                        ':' +
-                        sysInfo.QDocRoot.func.ownContent.root.uptime_min +
-                        ':' +
-                        sysInfo.QDocRoot.func.ownContent.root.uptime_sec;
-        this.setCapabilityValue('measure_nas_uptime', uptime);
-        
-        let fwInfo = await qnap.getFirmwareInfo();
-        this.setCapabilityValue('measure_nas_firmware_new_version', fwInfo.newVersion);
-    
-        // Update child devices: Ethernet eth0...eth3
-        await this.updateChildEth(sysInfo.QDocRoot.func.ownContent.root);
+        try{
+            this.setCapabilityValue('measure_nas_last_update', await this.convertDateToString(new Date()));
+            this.setCapabilityValue('measure_nas_model_name', sysInfo.QDocRoot.model.displayModelName);
+            this.setCapabilityValue('measure_nas_firmware', sysInfo.QDocRoot.firmware.version + '.' + sysInfo.QDocRoot.firmware.number);
+            this.setCapabilityValue('measure_nas_firmware_build_time', sysInfo.QDocRoot.firmware.buildTime);
+            this.setCapabilityValue('measure_nas_cpu_usage', parseFloat(parseFloat(sysInfo.QDocRoot.func.ownContent.root.cpu_usage.split(' ')[0]).toFixed(2)));
+            let total_memory = parseFloat(sysInfo.QDocRoot.func.ownContent.root.total_memory);
+            let free_memory = parseFloat(sysInfo.QDocRoot.func.ownContent.root.free_memory);
+            let used_memory = total_memory - free_memory;
+            let memory_usage = used_memory * 100 / total_memory;  
+            this.setCapabilityValue('measure_nas_mem_usage', parseFloat((memory_usage).toFixed(2)));
+            this.setCapabilityValue('measure_nas_mem_used', parseFloat((used_memory/1024).toFixed(2)));
+            this.setCapabilityValue('measure_nas_mem_free', parseFloat((free_memory/1024).toFixed(2)));
+            this.setCapabilityValue('measure_nas_mem_total', parseFloat((total_memory/1024).toFixed(2)));
+            if (sysInfo.QDocRoot.func.ownContent.root.cpu_tempc){
+                this.setCapabilityValue('measure_nas_cpu_temp', parseInt(sysInfo.QDocRoot.func.ownContent.root.cpu_tempc));
+            }
+            if (sysInfo.QDocRoot.func.ownContent.root.sys_tempc){
+                this.setCapabilityValue('measure_nas_sys_temp', parseInt(sysInfo.QDocRoot.func.ownContent.root.sys_tempc));
+            }
+            if (   sysInfo.QDocRoot.func.ownContent.root.sysfan_count 
+                && parseInt(sysInfo.QDocRoot.func.ownContent.root.sysfan_count) > 0
+                && sysInfo.QDocRoot.func.ownContent.root.sysfan1 ){
+                this.setCapabilityValue('measure_nas_fan_speed', parseInt(sysInfo.QDocRoot.func.ownContent.root.sysfan1));
+            }
+            let uptime =    sysInfo.QDocRoot.func.ownContent.root.uptime_day + 
+                            'd ' +
+                            sysInfo.QDocRoot.func.ownContent.root.uptime_hour +
+                            ':' +
+                            sysInfo.QDocRoot.func.ownContent.root.uptime_min +
+                            ':' +
+                            sysInfo.QDocRoot.func.ownContent.root.uptime_sec;
+            this.setCapabilityValue('measure_nas_uptime', uptime);
 
-        // Get Bandtwith info
-        await this.updateChildBw( await qnap.getBandwidthInfo() );
+            if (sysInfo.QDocRoot.func.ownContent.root.HDTempWarnT){
+                this.setCapabilityValue('measure_nas_temp_warn_hdd', parseInt(sysInfo.QDocRoot.func.ownContent.root.HDTempWarnT));
+            }
+            if (sysInfo.QDocRoot.func.ownContent.root.HDTempErrT){
+                this.setCapabilityValue('measure_nas_temp_error_hdd', parseInt(sysInfo.QDocRoot.func.ownContent.root.HDTempErrT));
+            }
+            if (sysInfo.QDocRoot.func.ownContent.root.SSDTempWarnT){
+                this.setCapabilityValue('measure_nas_temp_warn_ssd', parseInt(sysInfo.QDocRoot.func.ownContent.root.SSDTempWarnT));
+            }
+            if (sysInfo.QDocRoot.func.ownContent.root.SSDTempErrT){
+                this.setCapabilityValue('measure_nas_temp_error_ssd', parseInt(sysInfo.QDocRoot.func.ownContent.root.SSDTempErrT));
+            }
+            if (sysInfo.QDocRoot.func.ownContent.root.CPUTempWarnT){
+                this.setCapabilityValue('measure_nas_temp_warn_cpu', parseInt(sysInfo.QDocRoot.func.ownContent.root.CPUTempWarnT));
+            }
+            if (sysInfo.QDocRoot.func.ownContent.root.CPUTempErrT){
+                this.setCapabilityValue('measure_nas_temp_error_cpu', parseInt(sysInfo.QDocRoot.func.ownContent.root.CPUTempErrT));
+            }
+            if (sysInfo.QDocRoot.func.ownContent.root.SysTempWarnT){
+                this.setCapabilityValue('measure_nas_temp_warn_sys', parseInt(sysInfo.QDocRoot.func.ownContent.root.SysTempWarnT));
+            }
+            if (sysInfo.QDocRoot.func.ownContent.root.SysTempErrT){
+                this.setCapabilityValue('measure_nas_temp_error_sys', parseInt(sysInfo.QDocRoot.func.ownContent.root.SysTempErrT));
+            }
 
-        // Get Disk info
-        await this.updateChildHdd( await qnap.getDiskInfo() );
+            if ((   sysInfo.QDocRoot.func.ownContent.root.SysTempWarnT 
+                    && sysInfo.QDocRoot.func.ownContent.root.sys_tempc
+                    && parseInt(sysInfo.QDocRoot.func.ownContent.root.SysTempWarnT) < parseInt(sysInfo.QDocRoot.func.ownContent.root.sys_tempc))
+                ||
+                (   sysInfo.QDocRoot.func.ownContent.root.SysTempErrT 
+                    && sysInfo.QDocRoot.func.ownContent.root.sys_tempc
+                    && parseInt(sysInfo.QDocRoot.func.ownContent.root.SysTempErrT) < parseInt(sysInfo.QDocRoot.func.ownContent.root.sys_tempc)) )
+            {
+                this.setCapabilityValue('alarm_sys_temp', true);
+            }
+            else{
+              this.setCapabilityValue('alarm_sys_temp', false);
+            }
 
-        // Get Volume info
-        await this.updateChildVol( await qnap.getVolumeInfo() );
+            if ((   sysInfo.QDocRoot.func.ownContent.root.CPUTempWarnT 
+                && sysInfo.QDocRoot.func.ownContent.root.cpu_tempc
+                && parseInt(sysInfo.QDocRoot.func.ownContent.root.CPUTempWarnT) < parseInt(sysInfo.QDocRoot.func.ownContent.root.cpu_tempc))
+            ||
+            (   sysInfo.QDocRoot.func.ownContent.root.CPUTempErrT 
+                && sysInfo.QDocRoot.func.ownContent.root.cpu_tempc
+                && parseInt(sysInfo.QDocRoot.func.ownContent.root.CPUTempErrT) < parseInt(sysInfo.QDocRoot.func.ownContent.root.cpu_tempc)) )
+            {
+                this.setCapabilityValue('alarm_cpu_temp', true);
+            }
+            else{
+            this.setCapabilityValue('alarm_cpu_temp', false);
+            }
+
+        }
+        catch(error){
+            this.log(error);
+            // DiagnosticLog
+            this.homey.app.writeLog(error.stack);
+        }
+
+        try{
+            let fwInfo = await this.qnap.getFirmwareInfo();
+            if (fwInfo && fwInfo.newVersion){
+                // DiagnosticLog
+                this.homey.app.writeLog("Firmware data:");
+                this.homey.app.writeLog(fwInfo.newVersion);
+
+                this.setCapabilityValue('measure_nas_firmware_new_version', fwInfo.newVersion);
+            }
+        }
+        catch(error){
+            this.log(error);
+            // DiagnosticLog
+            this.homey.app.writeLog(error.stack);
+        }
+
+        try{
+            // Update child devices: Ethernet eth0...eth3
+            await this.updateChildEth(sysInfo.QDocRoot.func.ownContent.root);
+
+            // Get Bandtwith info
+            await this.updateChildBw( await this.qnap.getBandwidthInfo() );
+
+            // Get Disk info
+            await this.updateChildHdd( await this.qnap.getDiskInfo() );
+
+            // Get Volume info
+            await this.updateChildVol( await this.qnap.getVolumeInfo() );
+        }
+        catch(error){
+            this.log(error);
+            // DiagnosticLog
+            this.homey.app.writeLog(error.stack);
+        }
 
         return true;
       }
      
       async getSystemInfo(){
-          return await qnap.getSystemInfo();
+          return await this.qnap.getSystemInfo();
       }
 
       async getFirmwareInfo(){
-        return await qnap.getFirmwareInfo();
+        return await this.qnap.getFirmwareInfo();
       }
 
       async getBandtwithInfo(){
-        return await qnap.getBandwidthInfo();
+        return await this.qnap.getBandwidthInfo();
       }
 
       async getDiskInfo(){
-        return await qnap.getDiskInfo();
+        return await this.qnap.getDiskInfo();
       }
 
       async getVolumeInfo(){
-        return await qnap.getVolumeInfo();
+        return await this.qnap.getVolumeInfo();
       }
 
 
@@ -175,9 +321,37 @@ class nas extends Device {
             if (devices[i].getData().nasId = this.getData().id){
                 //this.log("Device eth NasID: "+devices[i].getData().nasId +" ethID: "+devices[i].getData().ethId) ;
                 let ethId = devices[i].getData().ethId + 1;
+                let ifname = '';
+                if ( data['ifname'+ethId] ){
+                    ifname = data['ifname'+ethId]
+                }
+                else{
+                    ifname = 'eth'+i;
+                }
+                let dname = '';
+                if ( data['dname'+ethId] ){ 
+                    dname = data['dname'+ethId];
+                }
+                let dns1 = '';
+                if ( data['dnsinfo'+ethId] && data['dnsinfo'+ethId].dns1 ){
+                    dns1 = data['dnsinfo'+ethId].dns1
+                }
+                let dns2 = '';
+                if ( data['dnsinfo'+ethId] && data['dnsinfo'+ethId].dns2 ){
+                    dns2 = data['dnsinfo'+ethId].dns2
+                }
+                if ( data['dnsinfo'] && data['dnsinfo'].DNS_LIST && data['dnsinfo'].DNS_LIST[0] )
+                {
+                    dns1 = data['dnsinfo'].DNS_LIST[0];
+                }
+                if ( data['dnsinfo'] && data['dnsinfo'].DNS_LIST && data['dnsinfo'].DNS_LIST[1] )
+                {
+                    dns2 = data['dnsinfo'].DNS_LIST[1];
+                }
+
                 let ethData = {
-                        ifname:         data['ifname'+ethId],
-                        dname:          data['dname'+ethId],
+                        ifname:         ifname,
+                        dname:          dname,
                         rx_packet:      data['rx_packet'+ethId],
                         tx_packet:      data['tx_packet'+ethId],
                         err_packet:     data['err_packet'+ethId],
@@ -186,11 +360,16 @@ class nas extends Device {
                         eth_mask:       data['eth_mask'+ethId],
                         eth_mac:        data['eth_mac'+ethId],
                         eth_usage:      data['eth_usage'+ethId],
-                        dns1:           data['dnsinfo'+ethId].dns1,
-                        dns2:           data['dnsinfo'+ethId].dns2,
+                        dns1:           dns1,
+                        dns2:           dns2,
                         eth_status:     data['eth_status'+ethId]
                     }
-                devices[i].updateDevice(ethData)
+
+                    // DiagnosticLog
+                    this.homey.app.writeLog("Ethernet data:");
+                    this.homey.app.writeLog(ethData);
+
+                    devices[i].updateDevice(ethData)
             }
         }
       }
@@ -204,6 +383,11 @@ class nas extends Device {
                 // Eth-device-ID=0 => read element eth0 
                 let bwData = data['eth'+devices[i].getData().ethId];
                 //this.log(bwData);
+
+                // DiagnosticLog
+                this.homey.app.writeLog("Bandwith data:");
+                this.homey.app.writeLog(bwData);
+
                 devices[i].updateDeviceBw(bwData)
             }
         }
@@ -216,6 +400,11 @@ class nas extends Device {
                 //this.log("Device hdd NasID: "+devices[i].getData().nasId +" hddID: "+devices[i].getData().hddId);
                 for (let j=0; j < data.entry.length; j++){
                     if (data.entry[j].HDNo == devices[i].getData().hddId){
+
+                        // DiagnosticLog
+                        this.homey.app.writeLog("HDD data:");
+                        this.homey.app.writeLog(data.entry[j]);
+
                         devices[i].updateDevice(data.entry[j]);
                     }
                 }
@@ -230,6 +419,16 @@ class nas extends Device {
                 //this.log("Device eth NasID: "+devices[i].getData().nasId +" ethID: "+devices[i].getData().ethId) ;
                 for (let j=0; j < data.volumeList.length; j++){
                     if (data.volumeList[j].volumeValue == devices[i].getData().volId){
+
+                        // DiagnosticLog
+                        this.homey.app.writeLog("Volume data:");
+                        this.homey.app.writeLog(
+                            {
+                                volume: data.volumeList[j],
+                                volumeUse: data.volumeUseList[j]
+                            }
+                        );
+
                         devices[i].updateDevice(
                             {
                                 volume: data.volumeList[j],

@@ -5,8 +5,8 @@
         "de": "Freier Speicher"
     },
     "units": { 
-        "en": "MB",
-        "de": "MB" 
+        "en": "GB",
+        "de": "GB" 
     },
     "getable": true,
     "setable": false,

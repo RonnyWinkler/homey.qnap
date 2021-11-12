@@ -1,0 +1,12 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "CPU temp. alert",
+        "de": "CPU Temp. Alarm"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/alarm_cpu_temp.svg"
+}

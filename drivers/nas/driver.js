@@ -150,6 +150,7 @@ class nasDriver extends Driver {
     this.username = data.username;
     this.password = data.password;
     let result = await this.login(data.username, data.password)
+
     if (result){
       //await session.showView("list_devices");
       return true;
@@ -175,6 +176,11 @@ class nasDriver extends Driver {
    */
   async onPairListDevices(session) {
     this.log("onPairListDevices()" );
+
+    // DiagnosticLog
+    this.homey.app.writeLog("NAS pairing - devices list:");
+    this.homey.app.writeLog(this.sysInfo);
+
     let devices = [];
     //let sysInfo = await qnap.getSystemInfo();
     let sysInfo = this.sysInfo;

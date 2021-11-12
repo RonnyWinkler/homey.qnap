@@ -1,0 +1,15 @@
+{
+    "id": "alarm_cpu_temp_false",
+    "highlight": true,
+    "title": {
+        "en": "CPU temperature alarm has been deactivated",
+        "de": "CPU-Temperatur-Alarm wurde deaktiviert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+        }
+      ]
+}

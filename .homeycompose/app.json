@@ -1,6 +1,6 @@
 {
   "id": "com.qnap",
-  "version": "0.0.5",
+  "version": "0.0.12",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "name": {
@@ -32,6 +32,15 @@
               "username": "winklerronny"
           }
       }
+  },
+  "api": {
+    "getLog": {
+      "method": "get",
+      "path": "/getLog/"
+    },
+    "clearLog": {
+      "method": "post",
+      "path": "/clearLog/"
+    }
   }
-
 }

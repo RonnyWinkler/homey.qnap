@@ -1,0 +1,15 @@
+{
+    "id": "alarm_sys_temp_false",
+    "highlight": true,
+    "title": {
+        "en": "System temperature alarm has been deactivated",
+        "de": "System-Temperatur-Alarm wurde deaktiviert"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+        }
+      ]
+}

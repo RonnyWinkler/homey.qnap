@@ -1,0 +1,12 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "System temp. alert",
+        "de": "System Temp. Alarm"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/alarm_sys_temp.svg"
+}
