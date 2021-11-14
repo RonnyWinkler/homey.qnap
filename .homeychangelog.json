@@ -46,5 +46,17 @@
   "0.0.12": {
     "en": "Added Sys/CPU temp. alarm. Fixed single-volume issue.",
     "de": "Sys/CPU Temp.Alarm ergänzt. Einzel-Volume-Fehler behoben."
+  },
+  "0.0.13": {
+    "en": "Correction: Device status in the event of a connection error; data distribution to HDD, Eth, Vol with several NAS.",
+    "de": "Korrektur: Geräte-Status bei Verbindungsfehler; Datenverteilung an HDD, Eth, Vol bei mehreren NAS."
+  },
+  "0.0.14": {
+    "en": "Correction: Device status in the event of a connection error; data distribution to HDD, Eth, Vol with several NAS.",
+    "de": "Korrektur: Geräte-Status bei Verbindungsfehler; Datenverteilung an HDD, Eth, Vol bei mehreren NAS."
+  },
+  "0.0.15": {
+    "en": "Correction: Device status in the event of a connection error; data distribution to HDD, Eth, Vol with several NAS, singe HDD reading.",
+    "de": "Korrektur: Geräte-Status bei Verbindungsfehler; Datenverteilung an HDD, Eth, Vol bei mehreren NAS, Lesen von Einzel-HDDs."
   }
 }

@@ -106,8 +106,8 @@ class nas extends Device {
         if (!this.qnap.isLoggedin()){
             try{
                 // DiagnosticLog
-                this.homey.app.writeLog("Login...");
-                this.log("Login...");
+                this.homey.app.writeLog("Login... using host "+this.getStoreValue('ip')+':'+this.getStoreValue('port')+' and user '+this.getStoreValue('user'));
+                this.log("Login... using host "+this.getStoreValue('ip')+':'+this.getStoreValue('port')+' and user '+this.getStoreValue('user'));
 
                 let loggedIn = await this.qnap.login(
                         this.getStoreValue('ip'), 
@@ -144,7 +144,21 @@ class nas extends Device {
             }
         }
         // Proceed with getting device data.
-        let sysInfo = await this.qnap.getSystemInfo();
+        let sysInfo;
+        try{
+            sysInfo = await this.qnap.getSystemInfo();
+        }
+        catch(error){
+            this.error('Error getting NAS data! Set devices unavailable. Error: '+error);
+            // Not logged in: Set device unavailable
+            this.setDeviceUnavailable();
+            this.qnap.logoff();
+            // DiagnosticLog
+            this.homey.app.writeLog("Error getting NAS data! Set devices unavailable. Error: "+error.stack);
+            //throw 'Login-Error: '+error;
+            return false;
+        }
+
         this.log(sysInfo);
 
         // DiagnosticLog
@@ -156,8 +170,14 @@ class nas extends Device {
             this.error('Login/Auth/Right-Error. Set devices unavailable.');
             this.setDeviceUnavailable();
             this.qnap.logoff();
+            // DiagnosticLog
+            this.homey.app.writeLog('Login/Auth/Right-Error. Set devices unavailable.');
             return false;
         }
+
+        // DiagnosticLog
+        this.homey.app.writeLog('Logon-Status ok, Data request ok.');
+
         // Logged in: Set device available
         this.setDeviceAvailable();
         this.log(sysInfo.QDocRoot.func.ownContent.root);
@@ -318,7 +338,7 @@ class nas extends Device {
       async updateChildEth(data){
         let devices = this.homey.drivers.getDriver('eth').getDevices();
         for (let i=0; i<devices.length; i++){
-            if (devices[i].getData().nasId = this.getData().id){
+            if (devices[i].getData().nasId == this.getData().id){
                 //this.log("Device eth NasID: "+devices[i].getData().nasId +" ethID: "+devices[i].getData().ethId) ;
                 let ethId = devices[i].getData().ethId + 1;
                 let ifname = '';
@@ -377,7 +397,7 @@ class nas extends Device {
       async updateChildBw(data){
         let devices = this.homey.drivers.getDriver('eth').getDevices();
         for (let i=0; i<devices.length; i++){
-            if (devices[i].getData().nasId = this.getData().id){
+            if (devices[i].getData().nasId == this.getData().id){
                 //this.log("Device eth NasID: "+devices[i].getData().nasId +" ethID: "+devices[i].getData().ethId) ;
                 // Get the JSON element corresponding to Eth-ID
                 // Eth-device-ID=0 => read element eth0 
@@ -396,7 +416,7 @@ class nas extends Device {
       async updateChildHdd(data){
         let devices = this.homey.drivers.getDriver('hdd').getDevices();
         for (let i=0; i<devices.length; i++){
-            if (devices[i].getData().nasId = this.getData().id){
+            if (devices[i].getData().nasId == this.getData().id){
                 //this.log("Device hdd NasID: "+devices[i].getData().nasId +" hddID: "+devices[i].getData().hddId);
                 for (let j=0; j < data.entry.length; j++){
                     if (data.entry[j].HDNo == devices[i].getData().hddId){
@@ -415,7 +435,7 @@ class nas extends Device {
       async updateChildVol(data){
         let devices = this.homey.drivers.getDriver('vol').getDevices();
         for (let i=0; i<devices.length; i++){
-            if (devices[i].getData().nasId = this.getData().id){
+            if (devices[i].getData().nasId == this.getData().id){
                 //this.log("Device eth NasID: "+devices[i].getData().nasId +" ethID: "+devices[i].getData().ethId) ;
                 for (let j=0; j < data.volumeList.length; j++){
                     if (data.volumeList[j].volumeValue == devices[i].getData().volId){
@@ -501,6 +521,10 @@ class nas extends Device {
      */
     async onDeleted() {
         this.log('NAS has been deleted');
+        if (this.timeoutupdateDevice){
+            this.homey.clearTimeout(this.timeoutupdateDevice);
+            this.timeoutupdateDevice = null;
+        }
     }
   }
   

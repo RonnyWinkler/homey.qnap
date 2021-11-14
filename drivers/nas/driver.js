@@ -111,22 +111,26 @@ class nasDriver extends Driver {
     if (view === 'loading') {
       this.log("onShowView(loading)");
       this.sysInfo = await qnap.getSystemInfo();
-      this.log(session);
+      //this.log(session);
       await session.nextView();
     }
   }
 
   async onRepairLogin(device, data){
-    this.log("onRepairLogin() => user="+data.username+" PW="+data.password);
+    this.log("onRepairLogin()");
     this.username = data.username;
     this.password = data.password;
+
+    this.homey.app.writeLog("Repair Login... using host "+this.nasIP+':'+this.nasPort+' and user '+this.username);
+    this.log("Repair Login... using host "+this.nasIP+':'+this.nasPort+' and user '+this.username);
+
     let result = await this.login(data.username, data.password)
     if (result){
       this.log('onRepairLogin, New device settings:'+
               ' ip='+this.nasIP+
               ' port='+this.nasPort+
-              ' user='+this.username+
-              ' pw='+this.password
+              ' user='+this.username
+              //' pw='+this.password
               );
       device.setStoreValue('ip', this.nasIP);
       device.setStoreValue('port', this.nasPort);
@@ -146,9 +150,13 @@ class nasDriver extends Driver {
 
 
   async onLogin(data){
-    this.log("onLogin() => user="+data.username+" PW="+data.password);
+    this.log("onLogin()");
     this.username = data.username;
     this.password = data.password;
+
+    this.homey.app.writeLog("Pair Login... using host "+this.nasIP+':'+this.nasPort+' and user '+this.username);
+    this.log("Pair Login... using host "+this.nasIP+':'+this.nasPort+' and user '+this.username);
+
     let result = await this.login(data.username, data.password)
 
     if (result){

@@ -16,7 +16,7 @@ class hdd extends Device {
   }
     
   async updateDevice(hddData){
-    this.log("updateDevice() NAS-ID"+ this.getData().nasId +" HSS-ID: "+this.getData().hddId+' Name: '+this.getName());
+    this.log("updateDevice() NAS-ID"+ this.getData().nasId +" HDD-ID: "+this.getData().hddId+' Name: '+this.getName());
     this.log(hddData);
 
     // DiagnosticLog

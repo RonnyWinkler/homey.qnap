@@ -153,7 +153,7 @@ class qnap {
     }
 
     async login(ip, port, user, pw){
-        //console.log("QNAP.login()");
+        //onsole.log("QNAP.login()");
         // clear authId before Login, clear old token
         this.authId = '';
         this.ip = ip;
@@ -188,7 +188,7 @@ class qnap {
             //console.log(result);
 
             let json = parser.parse(result);
-            console.log(json);
+            //console.log(json);
             if (json.QDocRoot 
                 && json.QDocRoot.authSid
                 && json.QDocRoot.authPassed == 1 
@@ -218,43 +218,43 @@ class qnap {
 
       if (!this.isLoggedin()){
             throw 'Not logged in!';
-        }
-        
-        let path =  this.path +
-                    'management/manaRequest.cgi?subfunc=sysinfo&hd=no&multicpu=1' +
-                    '&sid=' +
-                    this.authId;
-        let url =   this.protocol + 
-                    this.ip + 
-                    ':' + 
-                    this.port +
-                    path;                    
-        let options = {
-            hostname: this.ip,
-            port: this.port,
-            path: path,
-            method: 'GET',
-            rejectUnauthorized: false
-        }
-        //console.log("URL: "+url);
-        try{
-            // API-call
-            let result = await this.httpGet(url, options);
-            
-            //console.log("Result:");
-            //console.log(result);
+      }
+      
+      let path =  this.path +
+                  'management/manaRequest.cgi?subfunc=sysinfo&hd=no&multicpu=1' +
+                  '&sid=' +
+                  this.authId;
+      let url =   this.protocol + 
+                  this.ip + 
+                  ':' + 
+                  this.port +
+                  path;                    
+      let options = {
+          hostname: this.ip,
+          port: this.port,
+          path: path,
+          method: 'GET',
+          rejectUnauthorized: false
+      }
+      //console.log("URL: "+url);
+      try{
+          // API-call
+          let result = await this.httpGet(url, options);
+          
+          //console.log("Result:");
+          //console.log(result);
 
-            let json = parser.parse(result);
-            // console.log(json);
-            // console.log("QDocRoot.func.ownContent:");
-            // console.log(json.QDocRoot.func.ownContent);
+          let json = parser.parse(result);
+          // console.log(json);
+          // console.log("QDocRoot.func.ownContent:");
+          // console.log(json.QDocRoot.func.ownContent);
 
-            return json;
-        }
-        catch(error){
-            //console.log("Error: "+error);
-            throw error;
-        }
+          return json;
+      }
+      catch(error){
+          //console.log("Error: "+error);
+          throw error;
+      }
     }
 
     async getFirmwareInfo(){
@@ -386,7 +386,9 @@ class qnap {
           //console.log("Result:");
           //console.log(result);
 
-          let json = parser.parse(result);
+          let json = parser.parse(result, {
+            arrayMode: tagName => ['entry'].includes(tagName)
+          });
           // console.log(json);
           // console.log("Disk_Info:");
           // console.log(json.QDocRoot.Disk_Info);
@@ -476,7 +478,7 @@ class qnap {
                     .get(url, options, (response) => { 
                       if (response.statusCode !== 200){
                         response.resume();
-    
+
                         let message = "";
                         if ( response.statusCode === 204 )
                         { message = "No Data Found"; }
@@ -501,6 +503,7 @@ class qnap {
                       }
                     })
                     .on('error', (err) => {
+                      //console.log(err);
                       reject( new Error( "HTTP Error: " + err.message ) );
                       return;
                     });

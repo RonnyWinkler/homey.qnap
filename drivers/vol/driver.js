@@ -31,6 +31,7 @@ class volDriver extends Driver {
 
     session.setHandler('list_devices_selection', async (data) => {
       console.log("handler: list_devices_selection");
+      console.log(data);
       return await this.onListDeviceSelection(session, data);
     });
   }
