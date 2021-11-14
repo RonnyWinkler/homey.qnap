@@ -70,19 +70,19 @@ class nas extends Device {
         }
     }
 
-    async setDeviceUnavailable(){
-        this.setUnavailable();
+    async setDeviceUnavailable(message){
+        this.setUnavailable(message);
         let hddList = this.homey.drivers.getDriver('hdd').getDevices();
         for (let i=0; i<hddList.length; i++){
-            hddList[i].setUnavailable();
+            hddList[i].setUnavailable(message);
         }
         let ethList = this.homey.drivers.getDriver('eth').getDevices();
         for (let i=0; i<ethList.length; i++){
-            ethList[i].setUnavailable();
+            ethList[i].setUnavailable(message);
         }
         let volList = this.homey.drivers.getDriver('vol').getDevices();
         for (let i=0; i<volList.length; i++){
-            volList[i].setUnavailable();
+            volList[i].setUnavailable(message);
         }
     }   
 
@@ -121,7 +121,7 @@ class nas extends Device {
                     this.homey.app.writeLog("Login-Error! "+error.stack);
 
                     // Not logged in: Set device unavailable
-                    this.setDeviceUnavailable();
+                    this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.auth_error"));
                     //throw 'Login-Error, retry at next scan interval.';
                     return false;
                 }
@@ -134,7 +134,7 @@ class nas extends Device {
             catch(error){
                 this.error('Login-Error: '+error+' Set devices unavailable.');
                 // Not logged in: Set device unavailable
-                this.setDeviceUnavailable();
+                this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.login_error")+" ("+error.message+")");
 
                 // DiagnosticLog
                 this.homey.app.writeLog("Login-Error! "+error.stack);
@@ -151,7 +151,7 @@ class nas extends Device {
         catch(error){
             this.error('Error getting NAS data! Set devices unavailable. Error: '+error);
             // Not logged in: Set device unavailable
-            this.setDeviceUnavailable();
+            this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.connection_error")+" ("+error.message+")");
             this.qnap.logoff();
             // DiagnosticLog
             this.homey.app.writeLog("Error getting NAS data! Set devices unavailable. Error: "+error.stack);
@@ -168,7 +168,7 @@ class nas extends Device {
         //check for auth or user rights...
         if (sysInfo.QDocRoot.authPassed == '0'){
             this.error('Login/Auth/Right-Error. Set devices unavailable.');
-            this.setDeviceUnavailable();
+            this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.auth_error"));
             this.qnap.logoff();
             // DiagnosticLog
             this.homey.app.writeLog('Login/Auth/Right-Error. Set devices unavailable.');

@@ -12,5 +12,10 @@
         "label_state": "Connection state",
         "state_connected": "IP and port valid",
         "state_error": "IP and port not valid"
+    },
+    "device_unavailable_reason": {
+        "auth_error": "Authentication error or missing user rights.",
+        "login_error": "Login error",
+        "connection_error": "Connection error. Device offline or IP/port settings are wrong"
     }
 }

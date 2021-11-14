@@ -58,5 +58,9 @@
   "0.0.15": {
     "en": "Correction: Device status in the event of a connection error; data distribution to HDD, Eth, Vol with several NAS, singe HDD reading.",
     "de": "Korrektur: Geräte-Status bei Verbindungsfehler; Datenverteilung an HDD, Eth, Vol bei mehreren NAS, Lesen von Einzel-HDDs."
+  },
+  "0.0.16": {
+    "en": "Device status on connection error; data distribution to HDD,Eth,Vol with several NAS, single HDD reading, device unavailable information.",
+    "de": "Geräte-Status bei Verbindungsfehler; Datenverteilung an HDD,Eth,Vol bei mehreren NAS, Lesen von Einzel-HDDs; Geräte-Nichtverfügbarkeits-Info."
   }
 }
