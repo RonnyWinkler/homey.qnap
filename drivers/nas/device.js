@@ -134,7 +134,7 @@ class nas extends Device {
             catch(error){
                 this.error('Login-Error: '+error+' Set devices unavailable.');
                 // Not logged in: Set device unavailable
-                this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.login_error")+" ("+error.message+")");
+                this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.connection_error")+" ("+error.message+")");
 
                 // DiagnosticLog
                 this.homey.app.writeLog("Login-Error! "+error.stack);
