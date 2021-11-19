@@ -9,10 +9,17 @@ class eth extends Device {
       async onInit() {
         this.log('Eth has been initialized');
         await this.updateCapabilities();
+
+        // register eventhandler for maintenance buttons
+        this.registerCapabilityListener('button.wake_on_lan', this.wakeOnLan.bind(this));
+
       }
   
       async updateCapabilities(){
         // Add new capabilities (if not already added)
+        if (!this.hasCapability("button.wake_on_lan")){
+          await this.addCapability("button.wake_on_lan");
+      }
 
       }
     
@@ -69,6 +76,23 @@ class eth extends Device {
         this.setCapabilityValue('measure_eth_rx', Math.round((parseInt(bwData.rx) / 1000 / 8) *100) / 100 );
         return true;
       }
+
+      async wakeOnLan(){
+        this.log("Flow-Action wakeOnLan() NAS-ID"+ this.getData().nasId +" Eth-ID: "+this.getData().ethId+' Name: '+this.getName() + ' MAC: '+this.getCapabilityValue('measure_eth_mac'));
+        // DiagnosticLog
+        this.homey.app.writeLog("Flow-Action wakeOnLan() NAS-ID"+ this.getData().nasId +" Eth-ID: "+this.getData().ethId+' MAC: '+this.getCapabilityValue('measure_eth_mac'));
+
+        try{
+          await this.homey.app.wakeOnLan(this.getCapabilityValue('measure_eth_mac'));
+        }
+        catch(error){
+          this.log("Flow-Action Error: "+ error.message);
+          // DiagnosticLog
+          this.homey.app.writeLog("Flow-Action Error: "+ error.message);
+          throw error;
+          }
+      }
+
 
     /**
      * onAdded is called when the user adds the device, called just after pairing.

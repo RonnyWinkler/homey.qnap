@@ -14,6 +14,9 @@ class nas extends Device {
   
         await this.updateCapabilities();
 
+        // register eventhandler for maintenance buttons
+        this.registerCapabilityListener('button.wake_on_lan', this.wakeOnLan.bind(this));
+
         this.qnap = new qnapApi();
   
         // Start update-loop
@@ -51,6 +54,9 @@ class nas extends Device {
         }
         if (!this.hasCapability("alarm_sys_temp")){
             await this.addCapability("alarm_sys_temp");
+        }
+        if (!this.hasCapability("button.wake_on_lan")){
+            await this.addCapability("button.wake_on_lan");
         }
       }
     
@@ -482,7 +488,20 @@ class nas extends Device {
         let result = date + " " + time;
         return result;
       }
-  
+
+      async wakeOnLan(){
+        this.log("Flow-Action wakeOnLan() NAS-ID"+ this.getData().id + ' Name: '+this.getName());
+        // DiagnosticLog
+        this.homey.app.writeLog("Flow-Action wakeOnLan() NAS-ID"+ this.getData().id + ' Name: '+this.getName());
+
+        let devices = this.homey.drivers.getDriver('eth').getDevices();
+        for (let i=0; i<devices.length; i++){
+            if (devices[i].getData().nasId == this.getData().id){
+                await devices[i].wakeOnLan();
+            }
+        }
+      }
+
     /**
      * onAdded is called when the user adds the device, called just after pairing.
      */

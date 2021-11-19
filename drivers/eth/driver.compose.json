@@ -25,11 +25,26 @@
 
     "measure_eth_dns1",
     "measure_eth_dns2",
-    "measure_eth_status"
+    "measure_eth_status",
+
+    "button.wake_on_lan"
   ],
   "defaultCapabilities": [
     "measure_eth_rx"
   ],
+  "capabilitiesOptions": {
+    "button.wake_on_lan": {
+      "maintenanceAction": true,
+      "title": {
+         "en": "Wake-on-lan",
+         "de": "Wake-on-LAN"
+      },
+      "desc": {
+         "en": "Send wake-on-lan request.",
+         "de": "Sende Wake-on-LAN-Anforderung."
+      }
+    }
+  },
   "settings": [
   ],
   "pair": [

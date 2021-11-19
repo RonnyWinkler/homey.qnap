@@ -36,11 +36,26 @@
     "measure_nas_temp_warn_hdd",
     "measure_nas_temp_error_hdd",
     "measure_nas_temp_warn_ssd",
-    "measure_nas_temp_error_ssd"
+    "measure_nas_temp_error_ssd",
+
+    "button.wake_on_lan"
   ],
   "defaultCapabilities": [
     "measure_nas_cpu_usage"
   ],
+  "capabilitiesOptions": {
+    "button.wake_on_lan": {
+      "maintenanceAction": true,
+      "title": {
+         "en": "Wake-on-lan",
+         "de": "Wake-on-LAN"
+      },
+      "desc": {
+         "en": "Send wake-on-lan request.",
+         "de": "Sende Wake-on-LAN-Anforderung."
+      }
+    }
+  },
   "settings": [
     {
       "id": "scan_interval",

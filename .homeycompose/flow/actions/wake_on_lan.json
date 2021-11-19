@@ -1,0 +1,26 @@
+{
+    "id": "wake_on_lan",
+    "highlight": true,
+    "title": {
+        "en": "Send wake-on-lan request.",
+        "de": "Sende Wake-on-LAN-Anforderung."
+    },
+    "titleFormatted": {
+        "en": "Send wake-on-lan request to [[nas]].",
+        "de": "Sende Wake-on-LAN-Anforderung an [[nas]]."
+    },
+    "args": [
+        {
+            "type": "autocomplete",
+            "name": "nas",
+            "title": { 
+                "en": "NAS",
+                "de": "NAS"
+            },
+            "placeholder": { 
+                "en": "Select your NAS",
+                "de": "Wähle dein NAS" 
+            }
+        }
+    ]
+}

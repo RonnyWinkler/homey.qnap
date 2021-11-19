@@ -1,7 +1,8 @@
 'use strict';
 
 const Homey = require('homey');
-
+const wol = require('./wol');
+ 
 class qnapApp extends Homey.App {
 
   /**
@@ -11,6 +12,65 @@ class qnapApp extends Homey.App {
     this.log('qnapApp has been initialized');
     this.diagLog = "";
 
+    // Register Flow-Action-Listener
+    const wakeOnLanAction = this.homey.flow.getActionCard('wake_on_lan');
+    // wakeOnLanAction.registerRunListener(async (args, state) => {
+    //         return args.device.wakeOnLan();
+    // });
+    wakeOnLanAction.registerRunListener(async (args, state) => {
+            return await this.wakeOnLanAction(args, state);
+    });
+    wakeOnLanAction.registerArgumentAutocompleteListener('nas', async (query, args) => {
+      let results = [];
+      let devices = this.homey.drivers.getDriver('nas').getDevices();
+      for (let i=0; i<devices.length; i++){
+        devices[i].getData().nasId
+        results.push( {
+          name: devices[i].getName(),
+          icon: '/com.qnap/drivers/nas/assets/icon.svg',
+          // You can freely add additional properties to access in registerRunListener
+          id: devices[i].getData().id,
+        });
+      }
+
+      // filter based on the query
+      return results.filter((result) => {
+        return result.name.toLowerCase().includes(query.toLowerCase());
+      });
+    });
+  }
+
+  async wakeOnLanAction(args, state){
+    let nasList = this.homey.drivers.getDriver('nas').getDevices();
+    for (let i=0; i<nasList.length; i++){
+      if (nasList[i].getData().id == args.nas.id){
+        nasList[i].wakeOnLan();
+      }
+    }
+  }
+
+  async wakeOnLan(mac){
+    const self = this;
+    return new Promise( ( resolve, reject ) =>
+    {
+      try
+      {
+        wol.wake(mac, ( response ) =>{
+          self.log("WakeOnLan request sent.");
+          // DiagnosticLog
+          self.writeLog("WakeOnLan request sent.");
+
+          resolve(response);
+        });
+      }
+      catch ( err )
+      {
+        self.log("WakeOnLan Error:"+err.message);
+        // DiagnosticLog
+        self.writeLog("WakeOnLan Error:"+err.message);
+        reject( new Error( "WakeOnLan error: " + err.message ) );
+      }
+    });        
   }
 
   writeLog(message){
