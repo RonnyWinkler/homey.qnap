@@ -22,15 +22,19 @@ class qnapApp extends Homey.App {
     });
     wakeOnLanAction.registerArgumentAutocompleteListener('nas', async (query, args) => {
       let results = [];
+      let cloudId = await this.homey.cloud.getHomeyId();
+      let iconUri = 'https://'+cloudId+'.connect.athom.com/app/com.qnap/drivers/nas/assets/icon.svg';
+      //let iconUri = 'https://'+cloudId+'.connect.athom.com/app/com.qnap/drivers/nas/assets/images/small_foto.png';
       let devices = this.homey.drivers.getDriver('nas').getDevices();
       for (let i=0; i<devices.length; i++){
-        devices[i].getData().nasId
-        results.push( {
-          name: devices[i].getName(),
-          icon: '/com.qnap/drivers/nas/assets/icon.svg',
-          // You can freely add additional properties to access in registerRunListener
-          id: devices[i].getData().id,
-        });
+        results.push( 
+          {
+            name: devices[i].getName(),
+            icon: iconUri, 
+            // You can freely add additional properties to access in registerRunListener
+            id: devices[i].getData().id
+          }
+        );
       }
 
       // filter based on the query
