@@ -6,8 +6,12 @@
         "de": "Sende Wake-on-LAN-Anforderung."
     },
     "titleFormatted": {
-        "en": "Send wake-on-lan request to [[nas]].",
-        "de": "Sende Wake-on-LAN-Anforderung an [[nas]]."
+        "en": "Send wake-on-lan request to [[nas]]. The Ethernet interfaces of your NAS assigned to Homey are used for WoL.",
+        "de": "Sende Wake-on-LAN-Anforderung an [[nas]]. Für WoL werden die in Homey eingebundenen NAS-Ethernet-Schnittstellen verwendet."
+    },
+    "hint": {
+        "en": "The WoL functionality uses the Ethernet devices added to Homey. Please ensure that the NAS Ethernet interfaces that are to be used for WoL are available as devices in Homey.",
+        "de": "Die WoL Funktionalität verwendet die zu Homey hinzugefügten Ethernet-Geräte. Bitte stelle sicher, dass die NAS-Ethernet-Schnittstellen, die für WoL verwendet werden sollen, als Geräte in Homey vorhanden sind."
     },
     "args": [
         {

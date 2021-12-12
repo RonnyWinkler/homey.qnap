@@ -78,5 +78,9 @@
   "1.0.3": {
     "en": "Addes wake on lan flow action.",
     "de": "Wake-on-LAN Flow-Aktion hinzugefügt."
+  },
+  "1.0.4": {
+    "en": "Addes hint to WoL flow action.",
+    "de": "Hinweis zu WoL Flow-Aktion ergänzt."
   }
 }
