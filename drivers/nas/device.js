@@ -172,7 +172,7 @@ class nas extends Device {
         this.homey.app.writeLog(sysInfo);
 
         //check for auth or user rights...
-        if (sysInfo.QDocRoot.authPassed == '0'){
+        if (sysInfo.QDocRoot.authPassed == '0' || !sysInfo.QDocRoot.func || !sysInfo.QDocRoot.func.ownContent){
             this.error('Login/Auth/Right-Error. Set devices unavailable.');
             this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.auth_error"));
             this.qnap.logoff();
@@ -180,7 +180,7 @@ class nas extends Device {
             this.homey.app.writeLog('Login/Auth/Right-Error. Set devices unavailable.');
             return false;
         }
-
+        
         // DiagnosticLog
         this.homey.app.writeLog('Logon-Status ok, Data request ok.');
 

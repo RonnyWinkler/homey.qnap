@@ -106,7 +106,17 @@
     },
     {
       "id": "loading",
-      "template": "loading"
+      "template": "loading",
+      "navigation": {
+        "prev": "login",
+        "next": "list_devices"
+      }
+    },
+    {
+      "id": "loading_error",
+      "navigation": {
+        "prev": "login"
+      }
     },
     {
       "id": "list_devices",

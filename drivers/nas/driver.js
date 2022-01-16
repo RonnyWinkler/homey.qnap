@@ -112,7 +112,16 @@ class nasDriver extends Driver {
       this.log("onShowView(loading)");
       this.sysInfo = await qnap.getSystemInfo();
       //this.log(session);
-      await session.nextView();
+
+      // await session.nextView();
+
+      // Check sysInfo. If user has no admin rights, the subelements are missing
+      if ( this.sysInfo.QDocRoot && this.sysInfo.QDocRoot.func && this.sysInfo.QDocRoot.func.ownContent ){
+        await session.nextView();
+      }
+      else{
+        await session.showView("loading_error");
+      }
     }
   }
 
@@ -190,22 +199,25 @@ class nasDriver extends Driver {
     this.homey.app.writeLog(this.sysInfo);
 
     let devices = [];
+    let device = {};
     //let sysInfo = await qnap.getSystemInfo();
     let sysInfo = this.sysInfo;
 
-    let device = {
-      name: sysInfo.QDocRoot.func.ownContent.root.server_name,
-      data: {
-        id: sysInfo.QDocRoot.func.ownContent.root.serial_number
-      },
-      store: {
-        ip: this.nasIP,
-        port: this.nasPort,
-        user: this.username,
-        pw: this.password,
-      },
-      settings:{
-        scan_interval: 5
+    if ( this.sysInfo.QDocRoot && this.sysInfo.QDocRoot.func && this.sysInfo.QDocRoot.func.ownContent ){
+      device = {
+        name: sysInfo.QDocRoot.func.ownContent.root.server_name,
+        data: {
+          id: sysInfo.QDocRoot.func.ownContent.root.serial_number
+        },
+        store: {
+          ip: this.nasIP,
+          port: this.nasPort,
+          user: this.username,
+          pw: this.password,
+        },
+        settings:{
+          scan_interval: 5
+        }
       }
     }
     this.log("New device: ");

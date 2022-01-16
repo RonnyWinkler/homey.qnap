@@ -82,5 +82,9 @@
   "1.0.4": {
     "en": "Addes hint to WoL flow action.",
     "de": "Hinweis zu WoL Flow-Aktion ergänzt."
+  },
+  "1.0.5": {
+    "en": "Checking the user rights in the pairing dialog.",
+    "de": "Prüfung der Benutzerrechte im Pairing-Dialog."
   }
 }
