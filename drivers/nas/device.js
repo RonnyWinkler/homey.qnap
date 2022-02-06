@@ -17,6 +17,10 @@ class nas extends Device {
         // register eventhandler for maintenance buttons
         this.registerCapabilityListener('button.wake_on_lan', this.wakeOnLan.bind(this));
 
+        // register flow trigger
+        this.nasAvailableTrigger = this.homey.flow.getDeviceTriggerCard('nas_available');
+        this.nasUnavailableTrigger = this.homey.flow.getDeviceTriggerCard('nas_unavailable');
+
         this.qnap = new qnapApi();
   
         // Start update-loop
@@ -61,6 +65,9 @@ class nas extends Device {
       }
     
     async setDeviceAvailable(){
+        if ( !this.getAvailable() ){
+            this.nasAvailableTrigger.trigger( this );
+        }
         this.setAvailable();
         let hddList = this.homey.drivers.getDriver('hdd').getDevices();
         for (let i=0; i<hddList.length; i++){
@@ -77,6 +84,10 @@ class nas extends Device {
     }
 
     async setDeviceUnavailable(message){
+        if ( this.getAvailable() ){
+            const tokens = { "nas_unavailable_reason": message };
+            this.nasUnavailableTrigger.trigger( this,  tokens );
+        }
         this.setUnavailable(message);
         let hddList = this.homey.drivers.getDriver('hdd').getDevices();
         for (let i=0; i<hddList.length; i++){

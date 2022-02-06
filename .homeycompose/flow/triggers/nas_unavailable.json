@@ -1,0 +1,25 @@
+{
+    "id": "nas_unavailable",
+    "highlight": true,
+    "title": {
+        "en": "The NAS is no longer available.",
+        "de": "Das NAS ist nicht mehr verfügbar."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=nas"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "nas_unavailable_reason",
+            "type": "string",
+            "title": {
+                "en": "Reason",
+                "de": "Ursache"
+            }
+        }
+    ]
+}
