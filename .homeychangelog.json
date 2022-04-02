@@ -90,5 +90,9 @@
   "1.0.6": {
     "en": "Added flow trigger for NAS availability/unavailability.",
     "de": "Flow-Trigger für NAS-Verfügbarkeit/Nichtverfügbarkeit ergänzt."
+  },
+  "1.0.7": {
+    "en": "Fixed app category.",
+    "de": "App-Kategorie korrigiert."
   }
 }

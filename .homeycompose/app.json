@@ -1,6 +1,6 @@
 {
   "id": "com.qnap",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "name": {
@@ -12,7 +12,7 @@
     "de": "Erhalte Statistik-Daten deines QNAP-NAS"
   },
   "category": [
-    "tools"
+    "appliances"
   ],
   "author": {
     "name": "Ronny Winkler",
