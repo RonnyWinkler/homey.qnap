@@ -482,7 +482,7 @@ class nas extends Device {
       async convertDateToString(dateObj){
         const tz  = this.homey.clock.getTimezone();
         const nowTime = dateObj;
-        const now = nowTime.toLocaleString('de-DE', 
+        const now = nowTime.toLocaleString('en-US', 
             { 
                 hour12: false, 
                 timeZone: tz,

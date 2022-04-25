@@ -89,7 +89,7 @@ class qnapApp extends Homey.App {
 
     const tz  = this.homey.clock.getTimezone();
     const nowTime = new Date();
-    const now = nowTime.toLocaleString('de-DE', 
+    const now = nowTime.toLocaleString('en-US', 
         { 
             hour12: false, 
             timeZone: tz,
