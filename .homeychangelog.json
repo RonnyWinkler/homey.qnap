@@ -98,5 +98,9 @@
   "1.0.8": {
     "en": "Adaptet date convertion to FW 7.4.x",
     "de": "Datums-Konvertierung angepasst an FW 7.4.0."
+  },
+  "1.0.9": {
+    "en": "Exceptions handling for login/right errors",
+    "de": "Fehlerbehandlung bei Login/Rechte-Fehlern"
   }
 }
