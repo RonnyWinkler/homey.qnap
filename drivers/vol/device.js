@@ -35,8 +35,9 @@ class vol extends Device {
         // "measure_vol_size_total",
         // "measure_vol_size_used",
         // "measure_vol_folder"
-
-        this.setCapabilityValue('measure_vol_name', volData.volume.volumeLabel);
+        if (volData.volume != undefined && volData.volume.volumeLabel != undefined){
+          this.setCapabilityValue('measure_vol_name', volData.volume.volumeLabel);
+        }
         this.setCapabilityValue('measure_vol_id', parseInt(volData.volume.volumeValue));
         this.setCapabilityValue('measure_vol_disks', volData.volume.volumeDisks);
         this.setCapabilityValue('measure_vol_type', volData.volume.volumeStat);
