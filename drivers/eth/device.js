@@ -33,10 +33,20 @@ class eth extends Device {
 
         this.setCapabilityValue('measure_eth_id', ethData.ifname);
         this.setCapabilityValue('measure_eth_name', ethData.dname);
-        this.setCapabilityValue('measure_eth_mac', ethData.eth_mac);
+        if (ethData.eth_mac != undefined){
+          this.setCapabilityValue('measure_eth_mac', ethData.eth_mac);
+        }
+        else{
+          this.setCapabilityValue('measure_eth_mac', '');
+        }
+        if (ethData.eth_mask != undefined){
+          this.setCapabilityValue('measure_eth_mask', ethData.eth_mask);
+        }
+        else{
+          this.setCapabilityValue('measure_eth_mask', '');
+        }
         this.setCapabilityValue('measure_eth_ip_alloc', ethData.eth_usage);
         this.setCapabilityValue('measure_eth_ip', ethData.eth_ip);
-        this.setCapabilityValue('measure_eth_mask', ethData.eth_mask);
         this.setCapabilityValue('measure_eth_rx_packet', parseInt(ethData.rx_packet));
         this.setCapabilityValue('measure_eth_tx_packet', parseInt(ethData.tx_packet));
         this.setCapabilityValue('measure_eth_err_packet', parseInt(ethData.err_packet));
@@ -72,8 +82,12 @@ class eth extends Device {
         this.homey.app.writeLog(bwData);
 
         // calculate MB/s, correction with /5 to get identival data like in QTS
-        this.setCapabilityValue('measure_eth_tx', Math.round((parseInt(bwData.tx) / 1000 / 8) *100) / 100 );
-        this.setCapabilityValue('measure_eth_rx', Math.round((parseInt(bwData.rx) / 1000 / 8) *100) / 100 );
+        if (bwData != undefined && bwData.tx != undefined){
+          this.setCapabilityValue('measure_eth_tx', Math.round((parseInt(bwData.tx) / 1000 / 8) *100) / 100 );
+        }
+        if (bwData != undefined && bwData.rx != undefined){
+          this.setCapabilityValue('measure_eth_rx', Math.round((parseInt(bwData.rx) / 1000 / 8) *100) / 100 );
+        }
         return true;
       }
 

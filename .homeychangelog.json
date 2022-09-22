@@ -106,5 +106,9 @@
   "1.0.10": {
     "en": "Fix for missing volume name",
     "de": "Korrektur für fehlende Volume-Namen"
+  },
+  "1.0.11": {
+    "en": "Fix for missing eth tx/rx, eth mac, eth mask data.",
+    "de": "Korrektur für fehlende eth tx/rx, eth mac, eth mask Daten."
   }
 }
