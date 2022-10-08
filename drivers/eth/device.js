@@ -32,7 +32,12 @@ class eth extends Device {
         this.homey.app.writeLog(ethData);
 
         this.setCapabilityValue('measure_eth_id', ethData.ifname);
-        this.setCapabilityValue('measure_eth_name', ethData.dname);
+        if (ethData.dname != undefined){
+          this.setCapabilityValue('measure_eth_name', ethData.dname);
+        }
+        else{
+          this.setCapabilityValue('measure_eth_name', '');
+        }
         if (ethData.eth_mac != undefined){
           this.setCapabilityValue('measure_eth_mac', ethData.eth_mac);
         }
@@ -45,8 +50,18 @@ class eth extends Device {
         else{
           this.setCapabilityValue('measure_eth_mask', '');
         }
-        this.setCapabilityValue('measure_eth_ip_alloc', ethData.eth_usage);
-        this.setCapabilityValue('measure_eth_ip', ethData.eth_ip);
+        if (ethData.eth_usage != undefined){
+          this.setCapabilityValue('measure_eth_ip_alloc', ethData.eth_usage);
+        }
+        else{
+          this.setCapabilityValue('measure_eth_ip_alloc', '');
+        }
+        if (ethData.eth_ip != undefined){
+          this.setCapabilityValue('measure_eth_ip', ethData.eth_ip);
+        }
+        else{
+          this.setCapabilityValue('measure_eth_ip', '');
+        }
         this.setCapabilityValue('measure_eth_rx_packet', parseInt(ethData.rx_packet));
         this.setCapabilityValue('measure_eth_tx_packet', parseInt(ethData.tx_packet));
         this.setCapabilityValue('measure_eth_err_packet', parseInt(ethData.err_packet));
