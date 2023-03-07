@@ -114,5 +114,9 @@
   "1.0.12": {
     "en": "Fix for missing eth IP data.",
     "de": "Korrektur für fehlende eth IP Daten."
+  },
+  "1.0.13": {
+    "en": "Adjusted pair view style.",
+    "de": "Verbindungsdialog-Stil angepasst."
   }
 }

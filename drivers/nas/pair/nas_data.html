@@ -1,22 +1,21 @@
 
-<div id="nas_data" class="tabcontent">
-    <p data-i18n="pair.subtitle_nas_data"></p>
-        <fieldset>
-            <div class="field row">
-                <label for="ip"><span data-i18n="pair.label_nas_ip"></span></label>
-                <input id="ip" type="text" value="" oninput="nasIPChanged(this.value)"/>
-            </div>
-            <div class="field row">
-                <label for="port"><span data-i18n="pair.label_nas_port"></span></label>
-                <input id="port" type="text" value="" oninput="nasPortChanged(this.value)"/>
-            </div>
-            <div class="field row">
-                <label for="state"><span data-i18n="pair.label_state"></span></label>
-                <input id="state" type="text" value="Enter IP and Port..." disabled="true"/>
-            </div>
-        </fieldset>
-    <p data-i18n="pair.subtitle_user_data"></p>
-</div>
+<p class="homey-subtitle" data-i18n="pair.subtitle_nas_data"></p>
+<fieldset class="homey-form-fieldset">
+    <div class="homey-form-group">
+        <label for="ip" class="homey-form-label"><span data-i18n="pair.label_nas_ip"></span></label>
+        <input id="ip" class="homey-form-input" type="text" value="" oninput="nasIPChanged(this.value)"/>
+    </div>
+    <div class="homey-form-group">
+        <label for="port" class="homey-form-label"><span data-i18n="pair.label_nas_port"></span></label>
+        <input id="port" class="homey-form-input" type="text" value="" oninput="nasPortChanged(this.value)"/>
+    </div>
+    <div class="homey-form-group">
+        <label for="state" class="homey-form-label"><span data-i18n="pair.label_state"></span></label>
+        <input id="state" class="homey-form-input" type="text" value="Enter IP and Port..." disabled="true" style="opacity: 0.6"/>
+    </div>
+</fieldset>
+<p class="homey-subtitle" data-i18n="pair.subtitle_user_data"></p>
+
 
 <script type="application/javascript">
 
