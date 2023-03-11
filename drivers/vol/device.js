@@ -49,14 +49,15 @@ class vol extends Device {
         else{
           this.setCapabilityValue('alarm_vol_progress', false);
         }
+        if (volData.volumeUse){
+          this.setCapabilityValue('measure_vol_size_total', Math.round(parseInt(volData.volumeUse.total_size) /1024 /1024 /1024 *100) /100 );
+          this.setCapabilityValue('measure_vol_size_free', Math.round(parseInt(volData.volumeUse.free_size) /1024 /1024 /1024 *100) /100);
+          this.setCapabilityValue('measure_vol_size_data', Math.round(parseInt(volData.volumeUse.others_size) /1024 /1024 /1024 *100) /100 );
+          this.setCapabilityValue('measure_vol_size_others', Math.round(parseInt(volData.volumeUse.total_size - volData.volumeUse.free_size - volData.volumeUse.others_size ) /1024 /1024 /1024 *100) /100 );
+          this.setCapabilityValue('measure_vol_size_used', Math.round(parseInt(volData.volumeUse.total_size - volData.volumeUse.free_size ) /1024 /1024 /1024 *100) /100 );
+          this.setCapabilityValue('measure_vol_folder', parseInt(volData.volume.FolderCounter));
+        }
 
-        this.setCapabilityValue('measure_vol_size_total', Math.round(parseInt(volData.volumeUse.total_size) /1024 /1024 /1024 *100) /100 );
-        this.setCapabilityValue('measure_vol_size_free', Math.round(parseInt(volData.volumeUse.free_size) /1024 /1024 /1024 *100) /100);
-        this.setCapabilityValue('measure_vol_size_data', Math.round(parseInt(volData.volumeUse.others_size) /1024 /1024 /1024 *100) /100 );
-        this.setCapabilityValue('measure_vol_size_others', Math.round(parseInt(volData.volumeUse.total_size - volData.volumeUse.free_size - volData.volumeUse.others_size ) /1024 /1024 /1024 *100) /100 );
-        this.setCapabilityValue('measure_vol_size_used', Math.round(parseInt(volData.volumeUse.total_size - volData.volumeUse.free_size ) /1024 /1024 /1024 *100) /100 );
-        this.setCapabilityValue('measure_vol_folder', parseInt(volData.volume.FolderCounter));
-    
         return true;
       }
     

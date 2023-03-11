@@ -122,5 +122,9 @@
   "1.0.14": {
     "en": "Homey FW compatibility >= 8.1.1.",
     "de": "Homey FW Kompatibilität >= 8.1.1."
+  },
+  "1.0.15": {
+    "en": "Fix crash of missing volume usage data",
+    "de": "Abbruch bei fehlenden Volumen-Nutzungsdaten korrigiert."
   }
 }
