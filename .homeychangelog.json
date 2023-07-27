@@ -126,5 +126,9 @@
   "1.0.15": {
     "en": "Fix crash of missing volume usage data",
     "de": "Abbruch bei fehlenden Volumen-Nutzungsdaten korrigiert."
+  },
+  "1.0.16": {
+    "en": "Error handling for device available/unavailable changes.",
+    "de": "Fehlerbehandlung für Aänderung der Geräte-Verfügbarkeits/-Nichtverfügbarkeit."
   }
 }

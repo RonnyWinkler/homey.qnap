@@ -65,45 +65,55 @@ class nas extends Device {
       }
     
     async setDeviceAvailable(){
-        if ( !this.getAvailable() ){
-            this.nasAvailableTrigger.trigger( this );
+        try{
+            if ( !this.getAvailable() ){
+                this.nasAvailableTrigger.trigger( this );
+            }
+            await this.setAvailable();
+            let hddList = this.homey.drivers.getDriver('hdd').getDevices();
+            for (let i=0; i<hddList.length; i++){
+                await hddList[i].setAvailable();
+            }
+            let ethList = this.homey.drivers.getDriver('eth').getDevices();
+            for (let i=0; i<ethList.length; i++){
+                await ethList[i].setAvailable();
+            }
+            let volList = this.homey.drivers.getDriver('vol').getDevices();
+            for (let i=0; i<volList.length; i++){
+                await volList[i].setAvailable();
+            }
         }
-        this.setAvailable();
-        let hddList = this.homey.drivers.getDriver('hdd').getDevices();
-        for (let i=0; i<hddList.length; i++){
-            hddList[i].setAvailable();
-        }
-        let ethList = this.homey.drivers.getDriver('eth').getDevices();
-        for (let i=0; i<ethList.length; i++){
-            ethList[i].setAvailable();
-        }
-        let volList = this.homey.drivers.getDriver('vol').getDevices();
-        for (let i=0; i<volList.length; i++){
-            volList[i].setAvailable();
+        catch(error){
+            this.log("setDeviceAvailable error: "+error.message);
         }
     }
 
     async setDeviceUnavailable(message){
-        if ( this.getAvailable() ){
-            const tokens = { "nas_unavailable_reason": message };
-            this.nasUnavailableTrigger.trigger( this,  tokens );
+        try{
+            if ( this.getAvailable() ){
+                const tokens = { "nas_unavailable_reason": message };
+                this.nasUnavailableTrigger.trigger( this,  tokens );
+            }
+            await this.setUnavailable(message);
+            let hddList = this.homey.drivers.getDriver('hdd').getDevices();
+            for (let i=0; i<hddList.length; i++){
+                await hddList[i].setUnavailable(message);
+            }
+            let ethList = this.homey.drivers.getDriver('eth').getDevices();
+            for (let i=0; i<ethList.length; i++){
+                await ethList[i].setUnavailable(message);
+            }
+            let volList = this.homey.drivers.getDriver('vol').getDevices();
+            for (let i=0; i<volList.length; i++){
+                await volList[i].setUnavailable(message);
+            }
         }
-        this.setUnavailable(message);
-        let hddList = this.homey.drivers.getDriver('hdd').getDevices();
-        for (let i=0; i<hddList.length; i++){
-            hddList[i].setUnavailable(message);
-        }
-        let ethList = this.homey.drivers.getDriver('eth').getDevices();
-        for (let i=0; i<ethList.length; i++){
-            ethList[i].setUnavailable(message);
-        }
-        let volList = this.homey.drivers.getDriver('vol').getDevices();
-        for (let i=0; i<volList.length; i++){
-            volList[i].setUnavailable(message);
+        catch(error){
+            this.log("setDeviceAvailable error: "+error.message);
         }
     }   
 
-      async updateDevice(){
+    async updateDevice(){
         this.log("updateDevice() NAS-ID: "+this.getData().id+' Name: '+this.getName());
         
         // DiagnosticLog
@@ -138,7 +148,7 @@ class nas extends Device {
                     this.homey.app.writeLog("Login-Error! "+error.stack);
 
                     // Not logged in: Set device unavailable
-                    this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.auth_error"));
+                    await this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.auth_error"));
                     //throw 'Login-Error, retry at next scan interval.';
                     return false;
                 }
@@ -151,7 +161,7 @@ class nas extends Device {
             catch(error){
                 this.error('Login-Error: '+error+' Set devices unavailable.');
                 // Not logged in: Set device unavailable
-                this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.connection_error")+" ("+error.message+")");
+                await this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.connection_error")+" ("+error.message+")");
 
                 // DiagnosticLog
                 this.homey.app.writeLog("Login-Error! "+error.stack);
@@ -168,8 +178,8 @@ class nas extends Device {
         catch(error){
             this.error('Error getting NAS data! Set devices unavailable. Error: '+error);
             // Not logged in: Set device unavailable
-            this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.connection_error")+" ("+error.message+")");
-            this.qnap.logoff();
+            await this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.connection_error")+" ("+error.message+")");
+            await this.qnap.logoff();
             // DiagnosticLog
             this.homey.app.writeLog("Error getting NAS data! Set devices unavailable. Error: "+error.stack);
             //throw 'Login-Error: '+error;
@@ -185,8 +195,8 @@ class nas extends Device {
         //check for auth or user rights...
         if ( !sysInfo || !sysInfo.QDocRoot || sysInfo.QDocRoot.authPassed == '0' || !sysInfo.QDocRoot.func || !sysInfo.QDocRoot.func.ownContent){
             this.error('Login/Auth/Right-Error. Set devices unavailable.');
-            this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.auth_error"));
-            this.qnap.logoff();
+            await this.setDeviceUnavailable(this.homey.__("device_unavailable_reason.auth_error"));
+            await this.qnap.logoff();
             // DiagnosticLog
             this.homey.app.writeLog('Login/Auth/Right-Error. Set devices unavailable.');
             return false;
@@ -196,7 +206,7 @@ class nas extends Device {
         this.homey.app.writeLog('Logon-Status ok, Data request ok.');
 
         // Logged in: Set device available
-        this.setDeviceAvailable();
+        await this.setDeviceAvailable();
         this.log(sysInfo.QDocRoot.func.ownContent.root);
         // Set device data...
         try{
