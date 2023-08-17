@@ -130,5 +130,9 @@
   "1.0.16": {
     "en": "Error handling for device available/unavailable changes.",
     "de": "Fehlerbehandlung für Aänderung der Geräte-Verfügbarkeits/-Nichtverfügbarkeit."
+  },
+  "1.0.17": {
+    "en": "Additional error handling for WakeOnLAN.",
+    "de": "Weitere Fehlerbehandlung für WakeOnLAN."
   }
 }

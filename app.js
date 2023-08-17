@@ -53,7 +53,14 @@ class qnapApp extends Homey.App {
     let nasList = this.homey.drivers.getDriver('nas').getDevices();
     for (let i=0; i<nasList.length; i++){
       if (nasList[i].getData().id == args.nas.id){
-        nasList[i].wakeOnLan();
+        try{
+          await nasList[i].wakeOnLan();
+        }
+        catch (error){
+          this.log("WakeOnLan Error:"+err.message);
+          // DiagnosticLog
+          this.writeLog("WakeOnLan Error:"+err.message);
+        }
       }
     }
   }

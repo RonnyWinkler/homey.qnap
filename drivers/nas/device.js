@@ -15,7 +15,7 @@ class nas extends Device {
         await this.updateCapabilities();
 
         // register eventhandler for maintenance buttons
-        this.registerCapabilityListener('button.wake_on_lan', this.wakeOnLan.bind(this));
+        this.registerCapabilityListener('button.wake_on_lan',  async (value, opts) => { await this.wakeOnLan() } );
 
         // register flow trigger
         this.nasAvailableTrigger = this.homey.flow.getDeviceTriggerCard('nas_available');
